@@ -50,7 +50,6 @@ public class DuelScreen implements Screen {
         r.add("Fireball");
         r.add("Fireball");
         panel = new Panel(0, 0, "GUI/Panel.png");
-        panel.setRunePanel(r);
 
         tilemap = new Tilemap(301, 0,4, 6);
 

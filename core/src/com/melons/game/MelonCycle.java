@@ -16,57 +16,78 @@ public class MelonCycle extends Game {
 
 	private Stage main;
 	private Stage lib;
+	private MelonMage player;
 
+	private Stage currentStage;
 	public DuelScreen duel;
-	//public MainScreen main;
-	//public LibraryScreen lib;
 	private Stage stage;
+
+	ArrayList<SizeChangable> toResize = new ArrayList<SizeChangable>();
 
 	@Override
 	public void create () {
 		/*
 		duel = new DuelScreen(this);
 		main = new MainScreen(this);
-		lib = new LibraryScreen(this);
 
 		main.addScreen(lib);
 		lib.addScreen(main);
 
 		setScreen(main);*/
+		main = new Stage(new FitViewport(960, 540));
+		lib = new Stage(new FitViewport(960, 540));
 
 		// !========================! Создаем главное меню !========================! \\
-		main = new Stage(new FitViewport(1920, 1080));
 		Panel panel = new Panel(0, 0, "GUI/main_panel.png");
 		main.addActor(panel);
 
 		Panel currentRunes = new Panel(panel.getWidth(), 0, "GUI/Panel.png");
-		currentRunes.flip(panel.getWidth(), 0);
 		main.addActor(currentRunes);
 
-		Panel custom = new Panel(panel.getWidth(), currentRunes.getWidth(), "GUI/melon_panel.png");
+		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
 		main.addActor(custom);
 
-		GuiButton gui1 = new GuiButton(200, 700, this);
+		GuiButton gui1 = new GuiButton(200, 200, this);
 		main.addActor(gui1);
+		gui1.setStage(lib);
+
 		// !========================================================================! \\
 
 		// !========================! Создаем меню лавки знаний !========================! \\
-		lib = new Stage(new FitViewport(1920, 1080));
-
 		Panel panel1 = new Panel(0, 0, "GUI/lib_panel.png");
 		lib.addActor(panel1);
 
 		GuiButton gui2 = new GuiButton(200, 200, this);
 		lib.addActor(gui2);
+		gui2.setStage(main);
 
+		// !========================================================================! \\
 
-		Gdx.input.setInputProcessor(lib);
+		currentStage = main;
+		Gdx.input.setInputProcessor(currentStage);
 	}
 
 	@Override
 	public void render(){
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		lib.draw();
+		currentStage.draw();
 	}
 
+	public void changeStage(Stage s){
+		currentStage = s;
+		Gdx.input.setInputProcessor(currentStage);
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		System.out.println(width + " " + height);
+		for (SizeChangable i: toResize){
+			i.resize(width, height);
+		}
+	}
+
+	public void addResizable(SizeChangable s){
+		toResize.add(s);
+	}
 }

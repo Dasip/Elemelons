@@ -28,21 +28,6 @@ public class Panel extends Actor {
 
     }
 
-    public void setRunePanel(ArrayList<String> r){
-        int counter = 0;
-        for (String i: r) {
-            runes.add(new RuneButton(50, 65 + 50 * counter + 200 * counter, i));
-            counter += 1;
-        }
-    }
-
-    public void flip(float originX, float originY){
-        Image.setOrigin(originX, originY);
-        Image.rotate(270);
-        Image.setX(0);
-        Image.setY(-540);
-
-    }
 
     public float getHeight() { return Image.getHeight(); }
 
@@ -66,15 +51,8 @@ public class Panel extends Actor {
 
     public void drawAll(Batch b){
         Image.draw(b);
-        if (runes.size() > 0) {
-            for (RuneButton i : runes) {
-                b.draw(i.getImage(), i.getX(), i.getY());
-            }
-        }
-    }
-/*
-    public void addButton(float x, float y, GuiButton gb, Screen s){
 
     }
-*/
+
+
 }
