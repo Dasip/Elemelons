@@ -3,12 +3,12 @@ package com.melons.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.melons.game.skills.Fireball;
+import com.melons.game.skills.Lightning;
+import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
@@ -16,28 +16,29 @@ public class MelonCycle extends Game {
 
 	private Stage main;
 	private Stage lib;
+	private Stage fight;
 	private MelonMage player;
+	private MelonMage enemy;
 
 	private Stage currentStage;
-	public DuelScreen duel;
-	private Stage stage;
 
 	ArrayList<SizeChangable> toResize = new ArrayList<SizeChangable>();
 
 	@Override
 	public void create () {
-		/*
-		duel = new DuelScreen(this);
-		main = new MainScreen(this);
 
-		main.addScreen(lib);
-		lib.addScreen(main);
-
-		setScreen(main);*/
 		main = new Stage(new FitViewport(960, 540));
-		lib = new Stage(new FitViewport(960, 540));
+		fight = new Stage(new FitViewport(960, 540));
+		//lib = new Stage(new FitViewport(960, 540));
+
+        player = new MelonMage(0, 0);
+        enemy = new MelonMage(100, 100);
 
 		// !========================! Создаем главное меню !========================! \\
+        Panel panel1 = new Panel(0, 0, "GUI/lib_panel.png");
+        main.addActor(panel1);
+
+        /*
 		Panel panel = new Panel(0, 0, "GUI/main_panel.png");
 		main.addActor(panel);
 
@@ -45,26 +46,40 @@ public class MelonCycle extends Game {
 		main.addActor(currentRunes);
 
 		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
-		main.addActor(custom);
+		main.addActor(custom);*/
 
-		GuiButton gui1 = new GuiButton(200, 200, this);
+		GuiButton gui1 = new GuiButton(100, 400, this, "GUI/fight_button.png");
 		main.addActor(gui1);
-		gui1.setStage(lib);
+		gui1.setStage(fight);
 
 		// !========================================================================! \\
 
 		// !========================! Создаем меню лавки знаний !========================! \\
-		Panel panel1 = new Panel(0, 0, "GUI/lib_panel.png");
-		lib.addActor(panel1);
+		/*
 
 		GuiButton gui2 = new GuiButton(200, 200, this);
 		lib.addActor(gui2);
-		gui2.setStage(main);
+		gui2.setStage(main);*/
 
 		// !========================================================================! \\
 
+        // !========================! Создаем поле боя !========================! \\
+
+        Panel panel2 = new Panel(0, 0, "GUI/Panel2.png");
+        fight.addActor(panel2);
+
+        Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/melon_panel2.png");
+        fight.addActor(panel3);
+
+        // !========================================================================! \\
+
 		currentStage = main;
 		Gdx.input.setInputProcessor(currentStage);
+
+        // !========================! Учим персонажа навыкам !========================! \\
+        player.addSkill(new Fireball(this));
+        player.addSkill(new Lightning(this));
+        // !========================================================================! \\
 	}
 
 	@Override
@@ -73,9 +88,31 @@ public class MelonCycle extends Game {
 		currentStage.draw();
 	}
 
+	public void organizeFight(){
+	    currentStage.addActor(player);
+	    player.setCoords(200, 400);
+
+	    currentStage.addActor(enemy);
+	    enemy.setCoords(700, 400);
+
+	    float x_step = 75;
+	    float x_delim = 100;
+	    int n = 0;
+	    float y_start = 20;
+	    for (Actor i: player.getSkills()){
+	        currentStage.addActor(i);
+	        i.setX(x_step * (n+1) + x_delim * n);
+	        i.setY(y_start);
+	        n++;
+        }
+    }
+
 	public void changeStage(Stage s){
 		currentStage = s;
 		Gdx.input.setInputProcessor(currentStage);
+		if (s == fight){
+		    organizeFight();
+        }
 	}
 
 	@Override

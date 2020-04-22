@@ -13,13 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class GuiButton extends Actor implements SizeChangable{
 
-    private static Texture Image = new Texture("Tile1.png");
+    private static Texture Image;
 
     float default_x;
     float default_y;
 
-    float default_width = Image.getWidth();
-    float default_height = Image.getHeight();
+    float default_width ;
+    float default_height;
 
     float start_screen_width = 0;
     float start_screen_height = 0;
@@ -30,14 +30,17 @@ public class GuiButton extends Actor implements SizeChangable{
     private MelonCycle game;
     Stage toChange;
 
-    GuiButton(float x, float y, final MelonCycle g){
+    GuiButton(float x, float y, final MelonCycle g, String path){
         toChange = null;
         this.x = x;
         this.y = y;
         this.game = g;
+        Image = new Texture(path);
 
         default_x = x;
         default_y = y;
+        default_width = Image.getWidth();
+        default_height = Image.getWidth();
 
         setX(x);
         setY(y);
@@ -89,8 +92,6 @@ public class GuiButton extends Actor implements SizeChangable{
             float by = default_y / start_screen_height * nh;
             float width = default_width / start_screen_width * nw;
             float height = default_height / start_screen_height * nh;
-            //setX(x);
-            //setY(y);
             System.out.println(width + " " + height);
             setBounds(bx, by, width, height);
         }
