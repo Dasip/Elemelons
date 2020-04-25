@@ -10,8 +10,10 @@ import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Panel;
 import com.melons.game.interfaces.SizeChangable;
+import com.melons.game.interfaces.SkillButton;
 import com.melons.game.skills.Fireball;
 import com.melons.game.skills.Lightning;
+import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ public class MelonCycle extends Game {
 	private MelonMage enemy;
 
 	private Stage currentStage;
+	private FightController Mars;
 
 	ArrayList<com.melons.game.interfaces.SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
@@ -39,6 +42,12 @@ public class MelonCycle extends Game {
 
         player = new MelonMage(0, 0, hp1, this);
         enemy = new MelonMage(100, 100, hp2, this);
+
+        ArrayList<MelonMage> riv = new ArrayList<MelonMage>();
+        riv.add(player);
+        riv.add(enemy);
+
+        Mars = new FightController(riv);
 
 		// !========================! Создаем главное меню !========================! \\
         com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/lib_panel.png");
@@ -108,10 +117,11 @@ public class MelonCycle extends Game {
 	    float x_delim = 100;
 	    int n = 0;
 	    float y_start = 20;
-	    for (Actor i: player.getSkills()){
+	    for (Skill i: player.getSkills()){
 	        currentStage.addActor(i);
 	        i.setX(x_step * (n+1) + x_delim * n);
 	        i.setY(y_start);
+	        i.setController(Mars);
 	        n++;
         }
     }

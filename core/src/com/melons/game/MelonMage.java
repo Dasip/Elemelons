@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.interfaces.SizeChangable;
+import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class MelonMage extends Actor implements SizeChangable {
 
     private Texture Image;
 
-    ArrayList<Actor> skills = new ArrayList<Actor>();
+    ArrayList<Skill> skills = new ArrayList<Skill>();
 
     float default_x;
     float default_y;
@@ -27,6 +28,8 @@ public class MelonMage extends Actor implements SizeChangable {
     float y;
     float start_screen_width = 0;
     float start_screen_height = 0;
+
+    FightController Mars;
 
     int hp = 100;
     HealthBar hpBar;
@@ -49,7 +52,7 @@ public class MelonMage extends Actor implements SizeChangable {
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                execute();
+                giveMarsVictim();
                 return true;
             }
         });
@@ -58,11 +61,11 @@ public class MelonMage extends Actor implements SizeChangable {
 
     public Texture getImage(){ return Image; }
 
-    public void addSkill(Actor s){
+    public void addSkill(Skill s){
         skills.add(s);
     }
 
-    public ArrayList<Actor> getSkills(){
+    public ArrayList<Skill> getSkills(){
         return skills;
     }
 
@@ -75,9 +78,9 @@ public class MelonMage extends Actor implements SizeChangable {
         default_y = y;
     }
 
-    public void execute(){
-        hp -= 10;
-        hpBar.updateHealthBar(hp);
+    public void giveMarsVictim(){
+        System.out.println("Executed Order 66");
+        Mars.pickMelon(this);
     }
 
     @Override
@@ -94,6 +97,15 @@ public class MelonMage extends Actor implements SizeChangable {
             System.out.println(width + " " + height);
             setBounds(bx, by, width, height);
         }
+    }
+
+    public void receiveDamage(int dmg){
+        hp = hp - dmg < 0 ? 0 : hp - dmg;
+        hpBar.updateHealthBar(hp);
+    }
+
+    public void setFightController(FightController c){
+        Mars = c;
     }
 
     @Override

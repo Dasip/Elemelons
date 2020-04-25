@@ -6,7 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.melons.game.FightController;
 import com.melons.game.MelonCycle;
+import com.melons.game.MelonMage;
 import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.interfaces.SkillButton;
 
@@ -26,6 +28,11 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     float start_screen_width = 0;
     float start_screen_height = 0;
 
+    FightController Mars;
+
+    String name = "Skill";
+    int damage = 10;
+
     public Skill(MelonCycle g){
         x = 0;
         y = 0;
@@ -41,6 +48,11 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
             }
         });
         g.addResizable(this);
+    }
+
+    @Override
+    public void setController(FightController m){
+        Mars = m;
     }
 
     @Override
@@ -84,7 +96,13 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     @Override
     public void use() {
-        System.out.println("Skill");
+        Mars.pick(this);
+        System.out.println(this.name);
+    }
+
+    @Override
+    public void useOnTarget(MelonMage target) {
+        target.receiveDamage(damage);
     }
 
     @Override

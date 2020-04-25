@@ -8,10 +8,8 @@ public class Lightning extends Skill {
     public Lightning(MelonCycle g) {
         super(g);
         img = new Texture("Runes/Lightning.png");
+        this.name = "Lightning";
+        this.damage = 18;
     }
 
-    @Override
-    public void use() {
-        System.out.println("Lightning");
-    }
 }

@@ -8,10 +8,7 @@ public class Fireball extends Skill {
     public Fireball(MelonCycle g) {
         super(g);
         img = new Texture("Runes/Fireball.png");
-    }
-
-    @Override
-    public void use() {
-        System.out.println("Fireball");
+        this.name = "Fireball";
+        this.damage = 10;
     }
 }
