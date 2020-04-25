@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class FightController {
 
-    ArrayList<MelonMage> rivals = new ArrayList<MelonMage>();
+    ArrayList<MelonMage> rivals;
     MelonMage player;
     MelonMage current_melon;
     Skill picked_skill = null;
@@ -49,6 +49,7 @@ public class FightController {
     public void pickMelon(MelonMage m){
         if (picked_skill != null && m != player) {
             picked_skill.useOnTarget(m);
+            unpick();
         }
     }
 

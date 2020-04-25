@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.melons.game.gui.HealthBar;
+import com.melons.game.gui.Mark;
 import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.skills.Skill;
 
@@ -30,11 +31,14 @@ public class MelonMage extends Actor implements SizeChangable {
     private float start_screen_height = 0;
 
     private boolean shaded = false;
+    private boolean marked = false;
 
     FightController Mars;
 
     int hp = 100;
     HealthBar hpBar;
+
+    Mark mark;
 
     MelonMage(float x, float y, HealthBar hp, MelonCycle g){
 
@@ -51,6 +55,8 @@ public class MelonMage extends Actor implements SizeChangable {
         hpBar = hp;
         // С самого начала у героя хп равно максимальному значению
         hpBar.setVal(this.hp, this.hp);
+
+        mark = new Mark(x+10, y-100);
 
         setTouchable(Touchable.enabled);
         addListener(new InputListener(){
@@ -80,6 +86,8 @@ public class MelonMage extends Actor implements SizeChangable {
         setY(y);
         default_x = x;
         default_y = y;
+        mark.setX(x+24);
+        mark.setY(y+120);
     }
 
     public void giveMarsVictim(){
@@ -118,6 +126,10 @@ public class MelonMage extends Actor implements SizeChangable {
             batch.setColor((float)0.5, (float)0.5, (float)0.5, (float) 0.5);
         }
         batch.draw(Image, this.x ,this.y);
+        mark.updateStateTime();
+        if (marked){
+            batch.draw(mark.getCurrentFrame(), mark.getX(), mark.getY());
+        }
         if (shaded){
             batch.setColor(1, 1, 1, 1);
         }
@@ -132,11 +144,11 @@ public class MelonMage extends Actor implements SizeChangable {
     }
 
     public void setMark(){
-
+        marked = true;
     }
 
     public void unsetMark(){
-
+        marked = false;
     }
 
 

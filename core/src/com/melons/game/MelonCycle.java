@@ -37,17 +37,11 @@ public class MelonCycle extends Game {
 		fight = new Stage(new FitViewport(960, 540));
 		//lib = new Stage(new FitViewport(960, 540));
 
-		HealthBar hp1 = new HealthBar(190, 500);
-		HealthBar hp2 = new HealthBar(690, 500);
+		HealthBar hp1 = new HealthBar(140, 300);
+		HealthBar hp2 = new HealthBar(690, 300);
 
         player = new MelonMage(0, 0, hp1, this);
         enemy = new MelonMage(100, 100, hp2, this);
-
-        ArrayList<MelonMage> riv = new ArrayList<MelonMage>();
-        riv.add(player);
-        riv.add(enemy);
-
-        Mars = new FightController(riv, player);
 
 		// !========================! Создаем главное меню !========================! \\
         com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/lib_panel.png");
@@ -107,11 +101,12 @@ public class MelonCycle extends Game {
 	}
 
 	public void organizeFight(){
+		Mars = createMars();
 	    currentStage.addActor(player);
-	    player.setCoords(200, 400);
+	    player.setCoords(150, 200);
 
 	    currentStage.addActor(enemy);
-	    enemy.setCoords(700, 400);
+	    enemy.setCoords(700, 200);
 
 	    float x_step = 75;
 	    float x_delim = 100;
@@ -141,6 +136,14 @@ public class MelonCycle extends Game {
 		for (com.melons.game.interfaces.SizeChangable i: toResize){
 			i.resize(width, height);
 		}
+	}
+
+	public FightController createMars(){
+		ArrayList<MelonMage> rivals = new ArrayList<>();
+		rivals.add(player);
+		rivals.add(enemy);
+		FightController M = new FightController(rivals, player);
+		return M;
 	}
 
 	public void addResizable(SizeChangable s){
