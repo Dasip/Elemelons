@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.melons.game.MelonCycle;
-import com.melons.game.SizeChangable;
-import com.melons.game.SkillButton;
+import com.melons.game.interfaces.SizeChangable;
+import com.melons.game.interfaces.SkillButton;
 
 public class Skill extends Actor implements SizeChangable, SkillButton {
 

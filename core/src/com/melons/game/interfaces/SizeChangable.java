@@ -1,4 +1,4 @@
-package com.melons.game;
+package com.melons.game.interfaces;
 
 public interface SizeChangable {
 

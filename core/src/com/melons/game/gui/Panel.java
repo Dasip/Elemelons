@@ -1,4 +1,4 @@
-package com.melons.game;
+package com.melons.game.gui;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.melons.game.RuneButton;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class Panel extends Actor {
     private float y;
     private ArrayList<RuneButton> runes;
 
-    Panel(float x, float y, String path){
+    public Panel(float x, float y, String path){
         this.x = x;
         this.y = y;
         Text = new Texture(path);

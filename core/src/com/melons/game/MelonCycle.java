@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.melons.game.gui.GuiButton;
+import com.melons.game.gui.HealthBar;
+import com.melons.game.gui.Panel;
+import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.skills.Fireball;
 import com.melons.game.skills.Lightning;
-import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ public class MelonCycle extends Game {
 
 	private Stage currentStage;
 
-	ArrayList<SizeChangable> toResize = new ArrayList<SizeChangable>();
+	ArrayList<com.melons.game.interfaces.SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
 	@Override
 	public void create () {
@@ -31,11 +34,14 @@ public class MelonCycle extends Game {
 		fight = new Stage(new FitViewport(960, 540));
 		//lib = new Stage(new FitViewport(960, 540));
 
-        player = new MelonMage(0, 0);
-        enemy = new MelonMage(100, 100);
+		HealthBar hp1 = new HealthBar(190, 500);
+		HealthBar hp2 = new HealthBar(690, 500);
+
+        player = new MelonMage(0, 0, hp1, this);
+        enemy = new MelonMage(100, 100, hp2, this);
 
 		// !========================! Создаем главное меню !========================! \\
-        Panel panel1 = new Panel(0, 0, "GUI/lib_panel.png");
+        com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/lib_panel.png");
         main.addActor(panel1);
 
         /*
@@ -48,7 +54,7 @@ public class MelonCycle extends Game {
 		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
 		main.addActor(custom);*/
 
-		GuiButton gui1 = new GuiButton(100, 400, this, "GUI/fight_button.png");
+		com.melons.game.gui.GuiButton gui1 = new GuiButton(100, 400, this, "GUI/fight_button.png");
 		main.addActor(gui1);
 		gui1.setStage(fight);
 
@@ -65,11 +71,14 @@ public class MelonCycle extends Game {
 
         // !========================! Создаем поле боя !========================! \\
 
-        Panel panel2 = new Panel(0, 0, "GUI/Panel2.png");
+        com.melons.game.gui.Panel panel2 = new com.melons.game.gui.Panel(0, 0, "GUI/Panel2.png");
         fight.addActor(panel2);
 
-        Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/melon_panel2.png");
+        com.melons.game.gui.Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/melon_panel2.png");
         fight.addActor(panel3);
+
+        fight.addActor(hp1);
+        fight.addActor(hp2);
 
         // !========================================================================! \\
 
@@ -119,7 +128,7 @@ public class MelonCycle extends Game {
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		System.out.println(width + " " + height);
-		for (SizeChangable i: toResize){
+		for (com.melons.game.interfaces.SizeChangable i: toResize){
 			i.resize(width, height);
 		}
 	}

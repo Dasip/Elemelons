@@ -1,17 +1,16 @@
-package com.melons.game;
+package com.melons.game.gui;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.melons.game.MelonCycle;
+import com.melons.game.interfaces.SizeChangable;
 
-public class GuiButton extends Actor implements SizeChangable{
+public class GuiButton extends Actor implements SizeChangable {
 
     private static Texture Image;
 
@@ -30,7 +29,7 @@ public class GuiButton extends Actor implements SizeChangable{
     private MelonCycle game;
     Stage toChange;
 
-    GuiButton(float x, float y, final MelonCycle g, String path){
+    public GuiButton(float x, float y, final MelonCycle g, String path){
         toChange = null;
         this.x = x;
         this.y = y;
@@ -45,6 +44,7 @@ public class GuiButton extends Actor implements SizeChangable{
         setX(x);
         setY(y);
         setBounds(x, y, Image.getWidth(), Image.getHeight());
+
         setTouchable(Touchable.enabled);
         addListener(new InputListener(){
             @Override
