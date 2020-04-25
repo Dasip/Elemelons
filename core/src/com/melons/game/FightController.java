@@ -7,11 +7,13 @@ import java.util.ArrayList;
 public class FightController {
 
     ArrayList<MelonMage> rivals = new ArrayList<MelonMage>();
+    MelonMage player;
     MelonMage current_melon;
     Skill picked_skill = null;
 
-    public FightController(ArrayList<MelonMage> melons){
+    public FightController(ArrayList<MelonMage> melons, MelonMage player){
         rivals = melons;
+        this.player = player;
         current_melon = rivals.get(0);
         for (MelonMage m: rivals){
             m.setFightController(this);
@@ -19,16 +21,33 @@ public class FightController {
     }
 
     public void pick(Skill skill){
-        picked_skill = skill;
-        System.out.println("picked");
+        if (picked_skill == skill){
+            unpick();
+        }
+        else {
+            for (MelonMage i: rivals){
+                if (i != player){
+                    i.setMark();
+                }
+                else{
+                    i.setShade();
+                }
+            }
+            picked_skill = skill;
+            System.out.println("picked");
+        }
     }
 
     public void unpick(){
+        for (MelonMage i: rivals){
+            i.unsetMark();
+            i.unsetShade();
+        }
         picked_skill = null;
     }
 
     public void pickMelon(MelonMage m){
-        if (picked_skill != null) {
+        if (picked_skill != null && m != player) {
             picked_skill.useOnTarget(m);
         }
     }

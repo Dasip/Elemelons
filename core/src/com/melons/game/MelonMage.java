@@ -17,17 +17,19 @@ public class MelonMage extends Actor implements SizeChangable {
 
     private Texture Image;
 
-    ArrayList<Skill> skills = new ArrayList<Skill>();
+    ArrayList<Skill> skills = new ArrayList<>();
 
-    float default_x;
-    float default_y;
-    float default_width ;
-    float default_height;
+    private float default_x;
+    private float default_y;
+    private float default_width;
+    private float default_height;
 
-    float x;
-    float y;
-    float start_screen_width = 0;
-    float start_screen_height = 0;
+    private float x;
+    private float y;
+    private float start_screen_width = 0;
+    private float start_screen_height = 0;
+
+    private boolean shaded = false;
 
     FightController Mars;
 
@@ -43,6 +45,8 @@ public class MelonMage extends Actor implements SizeChangable {
         setY(y);
         default_x = x;
         default_y = y;
+        default_width = Image.getWidth();
+        default_height = Image.getHeight();
         setBounds(x, y, Image.getWidth(), Image.getHeight());
         hpBar = hp;
         // С самого начала у героя хп равно максимальному значению
@@ -110,6 +114,30 @@ public class MelonMage extends Actor implements SizeChangable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        if (shaded){
+            batch.setColor((float)0.5, (float)0.5, (float)0.5, (float) 0.5);
+        }
         batch.draw(Image, this.x ,this.y);
+        if (shaded){
+            batch.setColor(1, 1, 1, 1);
+        }
     }
+
+    public void setShade(){
+        shaded = true;
+    }
+
+    public void unsetShade(){
+        shaded = false;
+    }
+
+    public void setMark(){
+
+    }
+
+    public void unsetMark(){
+
+    }
+
+
 }

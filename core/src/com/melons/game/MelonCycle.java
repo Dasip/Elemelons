@@ -47,7 +47,7 @@ public class MelonCycle extends Game {
         riv.add(player);
         riv.add(enemy);
 
-        Mars = new FightController(riv);
+        Mars = new FightController(riv, player);
 
 		// !========================! Создаем главное меню !========================! \\
         com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/lib_panel.png");
