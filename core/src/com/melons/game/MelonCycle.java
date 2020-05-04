@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
@@ -33,8 +34,8 @@ public class MelonCycle extends Game {
 	@Override
 	public void create () {
 
-		main = new Stage(new FitViewport(960, 540));
-		fight = new Stage(new FitViewport(960, 540));
+		main = new Stage(new ExtendViewport(960, 540));
+		fight = new Stage(new ExtendViewport(960, 540));
 		//lib = new Stage(new FitViewport(960, 540));
 
 		HealthBar hp1 = new HealthBar(140, 300);

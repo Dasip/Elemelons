@@ -87,7 +87,7 @@ public class MelonMage extends Actor implements SizeChangable {
         default_x = x;
         default_y = y;
         mark.setX(x+24);
-        mark.setY(y+120);
+        mark.setY(y+140);
     }
 
     public void giveMarsVictim(){
@@ -106,7 +106,7 @@ public class MelonMage extends Actor implements SizeChangable {
             float by = default_y / start_screen_height * new_height;
             float width = default_width / start_screen_width * new_width;
             float height = default_height / start_screen_height * new_height;
-            System.out.println(width + " " + height);
+            System.out.println("Melon " + width + " " + height);
             setBounds(bx, by, width, height);
         }
     }

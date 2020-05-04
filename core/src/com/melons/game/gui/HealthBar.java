@@ -3,6 +3,7 @@ package com.melons.game.gui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.melons.game.Constants;
 
 public class HealthBar extends Actor {
 
@@ -38,6 +39,7 @@ public class HealthBar extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         float ratio = (float) current_value / max_value;
         batch.draw(bar, getX(), getY(), default_width * ratio, bar.getHeight());
+        Constants.melonFont.draw(batch, Integer.toString(current_value), getX() + 20, getY() + 48);
         batch.draw(border, getX(), getY());
     }
 }
