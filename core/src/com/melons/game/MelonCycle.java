@@ -143,7 +143,7 @@ public class MelonCycle extends Game {
 		ArrayList<MelonMage> rivals = new ArrayList<>();
 		rivals.add(player);
 		rivals.add(enemy);
-		FightController M = new FightController(rivals, player);
+		FightController M = new FightController(rivals, player, fight);
 		return M;
 	}
 

@@ -1,5 +1,7 @@
 package com.melons.game;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
@@ -11,10 +13,13 @@ public class FightController {
     MelonMage current_melon;
     Skill picked_skill = null;
 
-    public FightController(ArrayList<MelonMage> melons, MelonMage player){
+    Stage field;
+
+    public FightController(ArrayList<MelonMage> melons, MelonMage player, Stage g){
         rivals = melons;
         this.player = player;
         current_melon = rivals.get(0);
+        field = g;
         for (MelonMage m: rivals){
             m.setFightController(this);
         }
@@ -48,9 +53,13 @@ public class FightController {
 
     public void pickMelon(MelonMage m){
         if (picked_skill != null && m != player) {
-            picked_skill.useOnTarget(m);
+            picked_skill.setTarget(current_melon, m);
             unpick();
         }
+    }
+
+    public void addActor(Actor a){
+        field.addActor(a);
     }
 
 

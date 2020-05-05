@@ -39,7 +39,7 @@ public class HealthBar extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         float ratio = (float) current_value / max_value;
         batch.draw(bar, getX(), getY(), default_width * ratio, bar.getHeight());
-        Constants.melonFont.draw(batch, Integer.toString(current_value), getX() + 20, getY() + 48);
+        Constants.MELON_FONT.draw(batch, Integer.toString(current_value), getX() + 20, getY() + 48);
         batch.draw(border, getX(), getY());
     }
 }

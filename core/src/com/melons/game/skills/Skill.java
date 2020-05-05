@@ -16,6 +16,9 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     Texture img = new Texture("Runes/Fireball.png");
 
+    MelonMage speller;
+    MelonMage target;
+
     float default_x;
     float default_y;
 
@@ -43,7 +46,7 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                use();
+                pick();
                 return true;
             }
         });
@@ -95,9 +98,14 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     }
 
     @Override
-    public void use() {
+    public void pick() {
         Mars.pick(this);
         System.out.println(this.name);
+    }
+
+    @Override
+    public void use() {
+
     }
 
     @Override
@@ -106,7 +114,14 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     }
 
     @Override
+    public void setTarget(MelonMage speller, MelonMage target) {
+        this.speller = speller;
+        this.target = target;
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(img, this.x, this.y);
     }
+
 }
