@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class FightController {
 
+
+    private boolean pickable = true;
     ArrayList<MelonMage> rivals;
     MelonMage player;
     MelonMage current_melon;
@@ -29,7 +31,7 @@ public class FightController {
         if (picked_skill == skill){
             unpick();
         }
-        else {
+        else if (pickable) {
             for (MelonMage i: rivals){
                 if (i != player){
                     i.setMark();
@@ -52,7 +54,7 @@ public class FightController {
     }
 
     public void pickMelon(MelonMage m){
-        if (picked_skill != null && m != player) {
+        if (picked_skill != null && m != player && pickable) {
             picked_skill.setTarget(current_melon, m);
             unpick();
         }
@@ -62,5 +64,12 @@ public class FightController {
         field.addActor(a);
     }
 
+    public void setPickable(boolean v){
+        pickable = v;
+    }
+
+    public boolean getPickable(){
+        return pickable;
+    }
 
 }

@@ -105,7 +105,7 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     @Override
     public void use() {
-
+        Mars.setPickable(true);
     }
 
     @Override
@@ -115,6 +115,7 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     @Override
     public void setTarget(MelonMage speller, MelonMage target) {
+        Mars.setPickable(false);
         this.speller = speller;
         this.target = target;
     }
