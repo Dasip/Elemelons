@@ -3,6 +3,7 @@ package com.melons.game.skills;
 import com.badlogic.gdx.graphics.Texture;
 import com.melons.game.MelonCycle;
 import com.melons.game.MelonMage;
+import com.melons.game.spelleffects.Effect;
 import com.melons.game.spelleffects.FireballEffect;
 
 public class Fireball extends Skill {
@@ -22,7 +23,7 @@ public class Fireball extends Skill {
     @Override
     public void setTarget(MelonMage speller, MelonMage target) {
         super.setTarget(speller, target);
-        FireballEffect ball = new FireballEffect(speller.getX(), speller.getY() + speller.getHeight() / 2, this);
+        Effect ball = new FireballEffect(speller.getX(), speller.getY() + speller.getHeight() / 2, this);
         Mars.addActor(ball);
         ball.setTarget(target.getX(), target.getY());
 
