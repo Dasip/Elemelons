@@ -73,10 +73,10 @@ public class Effect extends Actor implements SpellEffect, SizeChangable {
         target_x = x;
         target_y = y;
         if (x > this.x){
-            setXVector(5);
+            setXVector(20);
         }
         else{
-            setXVector(-5);
+            setXVector(-20);
         }
     }
 

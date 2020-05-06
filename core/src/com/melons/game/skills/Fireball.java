@@ -12,7 +12,8 @@ public class Fireball extends Skill {
         super(g);
         img = new Texture("Runes/Fireball.png");
         this.name = "Fireball";
-        this.damage = 10;
+        this.damage = 8;
+        seedToUse = 1;
     }
 
     @Override

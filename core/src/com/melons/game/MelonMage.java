@@ -13,12 +13,20 @@ import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
+import javax.xml.soap.Text;
+
 
 public class MelonMage extends Actor implements SizeChangable {
 
     private Texture Image;
 
     ArrayList<Skill> skills = new ArrayList<>();
+
+    private int max_seeds = 6;
+    private int seeds = 6;
+    private int seeds_in_use = 0;
+    private ArrayList<Texture> seedPanel = new ArrayList<Texture>();
+    private boolean drawSeeds = false;
 
     private float default_x;
     private float default_y;
@@ -57,6 +65,12 @@ public class MelonMage extends Actor implements SizeChangable {
         hpBar.setVal(this.hp, this.hp);
 
         mark = new Mark(x+10, y-100);
+
+
+        // Заполняем список текстур семянами
+        for (int i=0; i<max_seeds; i++){
+            seedPanel.add(new Texture("GUI/Seeds/seedFull.png"));
+        }
 
         setTouchable(Touchable.enabled);
         addListener(new InputListener(){
@@ -122,14 +136,25 @@ public class MelonMage extends Actor implements SizeChangable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
+        if (drawSeeds) {
+            for (int i = 0; i < max_seeds; i++) {
+                batch.draw(seedPanel.get(i), 40 + i * 74, Constants.START_SCREEN_HEIGHT - 70);
+            }
+        }
+
         if (shaded){
             batch.setColor((float)0.5, (float)0.5, (float)0.5, (float) 0.5);
         }
+
         batch.draw(Image, this.x ,this.y);
+        //System.out.println(seedPanel);
         mark.updateStateTime();
+
         if (marked){
             batch.draw(mark.getCurrentFrame(), mark.getX(), mark.getY());
         }
+
         if (shaded){
             batch.setColor(1, 1, 1, 1);
         }
@@ -151,5 +176,36 @@ public class MelonMage extends Actor implements SizeChangable {
         marked = false;
     }
 
+    public void setSeedDraw(boolean v){
+        drawSeeds = v;
+    }
+
+    public void showSeedsToUse(int s){
+        int distance = s;
+        String path = "GUI/Seeds/seedInUse.png";
+        int max_val = seeds;
+
+        if (s == 0){
+            path = "GUI/Seeds/seedFull.png";
+            distance = seeds_in_use;
+        }
+
+        seeds_in_use = s;
+        System.out.println("Max val " + max_val);
+        if (max_val - distance >= 0) {
+            for (int i = max_val - 1; i >= max_val - distance; i--) {
+                seedPanel.set(i, new Texture(path));
+            }
+        }
+
+    }
+
+    public void decreaseSeeds(int v){
+        seeds -= v;
+        for (int i=max_seeds-1; i>seeds-1; i--){
+            seedPanel.set(i, new Texture("GUI/Seeds/seedEmpty.png"));
+        }
+        System.out.println("Decreased " + seeds);
+    }
 
 }

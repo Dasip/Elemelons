@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.melons.game.skills.Skill;
 
+import org.omg.CORBA.UserException;
+
 import java.util.ArrayList;
 
 public class FightController {
@@ -20,6 +22,7 @@ public class FightController {
     public FightController(ArrayList<MelonMage> melons, MelonMage player, Stage g){
         rivals = melons;
         this.player = player;
+        player.setSeedDraw(true);
         current_melon = rivals.get(0);
         field = g;
         for (MelonMage m: rivals){
@@ -38,6 +41,7 @@ public class FightController {
                 }
                 else{
                     i.setShade();
+                    i.showSeedsToUse(skill.getSeeds());
                 }
             }
             picked_skill = skill;
@@ -50,13 +54,16 @@ public class FightController {
             i.unsetMark();
             i.unsetShade();
         }
+        current_melon.showSeedsToUse(0);
         picked_skill = null;
     }
 
     public void pickMelon(MelonMage m){
         if (picked_skill != null && m != player && pickable) {
             picked_skill.setTarget(current_melon, m);
+            current_melon.decreaseSeeds(picked_skill.getSeeds());
             unpick();
+
         }
     }
 

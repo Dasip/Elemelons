@@ -11,4 +11,5 @@ public interface SkillButton {
     public void useOnTarget(MelonMage target);
     public void pick();
     public void setTarget(MelonMage speller, MelonMage target);
+    public int getSeeds();
 }

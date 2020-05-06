@@ -31,6 +31,8 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     float start_screen_width = 0;
     float start_screen_height = 0;
 
+    int seedToUse = 1;
+
     FightController Mars;
 
     String name = "Skill";
@@ -118,6 +120,11 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
         Mars.setPickable(false);
         this.speller = speller;
         this.target = target;
+    }
+
+    @Override
+    public int getSeeds() {
+        return seedToUse;
     }
 
     @Override

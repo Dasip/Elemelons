@@ -12,7 +12,8 @@ public class Lightning extends Skill {
         super(g);
         img = new Texture("Runes/Lightning.png");
         this.name = "Lightning";
-        this.damage = 18;
+        this.damage = 15;
+        seedToUse = 2;
     }
 
     @Override
