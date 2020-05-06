@@ -10,11 +10,13 @@ import java.util.ArrayList;
 
 public class FightController {
 
-
+    private boolean mustChange = false;
     private boolean pickable = true;
+
     ArrayList<MelonMage> rivals;
     MelonMage player;
     MelonMage current_melon;
+    int current_index = 0;
     Skill picked_skill = null;
 
     Stage field;
@@ -28,6 +30,14 @@ public class FightController {
         for (MelonMage m: rivals){
             m.setFightController(this);
         }
+    }
+
+    public void changeTurn(){
+        current_index = current_index >= rivals.size() - 1 ? 0 : current_index + 1;
+        current_melon = rivals.get(current_index);
+        current_melon.refreshSeeds();
+        mustChange = false;
+        if (current_melon != player){changeTurn();}
     }
 
     public void pick(Skill skill){
@@ -73,10 +83,17 @@ public class FightController {
 
     public void setPickable(boolean v){
         pickable = v;
+        if (pickable && mustChange){
+            changeTurn();
+        }
     }
 
     public boolean getPickable(){
         return pickable;
+    }
+
+    public void setMustChange(boolean v){
+        mustChange = v;
     }
 
 }

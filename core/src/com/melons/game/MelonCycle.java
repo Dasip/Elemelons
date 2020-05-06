@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.melons.game.gui.EndTurnButton;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Panel;
@@ -61,7 +62,7 @@ public class MelonCycle extends Game {
 		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
 		main.addActor(custom);*/
 
-		com.melons.game.gui.GuiButton gui1 = new GuiButton(100, 400, this, "GUI/fight_button.png");
+		com.melons.game.gui.GuiButton gui1 = new GuiButton(100, 400, this, "GUI/Buttons/fight_button.png");
 		main.addActor(gui1);
 		gui1.setStage(fight);
 
@@ -83,6 +84,8 @@ public class MelonCycle extends Game {
 
         com.melons.game.gui.Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/melon_panel2.png");
         fight.addActor(panel3);
+
+
 
         fight.addActor(hp1);
         fight.addActor(hp2);
@@ -112,6 +115,9 @@ public class MelonCycle extends Game {
 	    currentStage.addActor(enemy);
 	    enemy.setCoords(700, 200);
 
+		EndTurnButton end = new EndTurnButton(700, 410, this, "GUI/Buttons/turn_button.png", Mars);
+		fight.addActor(end);
+
 	    float x_step = 75;
 	    float x_delim = 100;
 	    int n = 0;
@@ -121,6 +127,7 @@ public class MelonCycle extends Game {
 	        i.setX(x_step * (n+1) + x_delim * n);
 	        i.setY(y_start);
 	        i.setController(Mars);
+	        i.setOwner(player);
 	        n++;
         }
     }

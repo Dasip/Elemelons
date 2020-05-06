@@ -206,6 +206,18 @@ public class MelonMage extends Actor implements SizeChangable {
             seedPanel.set(i, new Texture("GUI/Seeds/seedEmpty.png"));
         }
         System.out.println("Decreased " + seeds);
+        if (seeds == 0){
+            Mars.setMustChange(true);
+        }
     }
+
+    public void refreshSeeds(){
+        seeds = max_seeds;
+        for (int i=0; i<seeds; i++){
+            seedPanel.set(i, new Texture("GUI/Seeds/seedFull.png"));
+        }
+    }
+
+    public int getSeeds(){ return seeds; }
 
 }
