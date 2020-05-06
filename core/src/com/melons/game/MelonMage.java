@@ -44,6 +44,7 @@ public class MelonMage extends Actor implements SizeChangable {
     FightController Mars;
 
     int hp = 100;
+    int max_hp = 100;
     HealthBar hpBar;
 
     Mark mark;
@@ -62,11 +63,14 @@ public class MelonMage extends Actor implements SizeChangable {
         setBounds(x, y, Image.getWidth(), Image.getHeight());
         hpBar = hp;
         // С самого начала у героя хп равно максимальному значению
-        hpBar.setVal(this.hp, this.hp);
+        hpBar.setVal(this.hp, this.max_hp);
+        hpBar.setX(x-20);
+        hpBar.setY(y+20);
 
         mark = new Mark(x+10, y-100);
 
 
+        seedPanel = new ArrayList<Texture>();
         // Заполняем список текстур семянами
         for (int i=0; i<max_seeds; i++){
             seedPanel.add(new Texture("GUI/Seeds/seedFull.png"));
@@ -102,6 +106,8 @@ public class MelonMage extends Actor implements SizeChangable {
         default_y = y;
         mark.setX(x+24);
         mark.setY(y+150);
+        hpBar.setX(x-20);
+        hpBar.setY(y+Image.getHeight()+20);
     }
 
     public void giveMarsVictim(){
@@ -128,6 +134,12 @@ public class MelonMage extends Actor implements SizeChangable {
     public void receiveDamage(int dmg){
         hp = hp - dmg < 0 ? 0 : hp - dmg;
         hpBar.updateHealthBar(hp);
+        if (hp <= 0){
+            Mars.defeated(this);
+            hpBar.remove();
+            remove();
+        }
+
     }
 
     public void setFightController(FightController c){
@@ -219,5 +231,14 @@ public class MelonMage extends Actor implements SizeChangable {
     }
 
     public int getSeeds(){ return seeds; }
+
+    public void refreshAll(){
+        seeds = max_seeds;
+        showSeedsToUse(0);
+        hp = max_hp;
+        for (int i=0; i<seedPanel.size(); i++){
+            seedPanel.set(i, new Texture("GUI/Seeds/seedFull.png"));
+        }
+    }
 
 }

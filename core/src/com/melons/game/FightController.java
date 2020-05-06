@@ -1,7 +1,10 @@
 package com.melons.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.melons.game.gui.GuiButton;
+import com.melons.game.gui.Panel;
 import com.melons.game.skills.Skill;
 
 import org.omg.CORBA.UserException;
@@ -19,14 +22,17 @@ public class FightController {
     int current_index = 0;
     Skill picked_skill = null;
 
+    private MelonCycle game;
+
     Stage field;
 
-    public FightController(ArrayList<MelonMage> melons, MelonMage player, Stage g){
+    public FightController(ArrayList<MelonMage> melons, MelonMage player, MelonCycle gam, Stage g){
         rivals = melons;
         this.player = player;
         player.setSeedDraw(true);
         current_melon = rivals.get(0);
         field = g;
+        game = gam;
         for (MelonMage m: rivals){
             m.setFightController(this);
         }
@@ -94,6 +100,27 @@ public class FightController {
 
     public void setMustChange(boolean v){
         mustChange = v;
+    }
+
+    public void defeated(MelonMage m){
+        for (MelonMage i: rivals){
+            if (i != m){
+                i.refreshAll();
+            }
+        }
+
+        pickable = false;
+        System.out.println("Defeated!");
+
+        Texture win = new Texture("GUI/Panels/message_panel.png");
+        Panel message_window = new Panel(Constants.START_SCREEN_WIDTH / 2 - win.getWidth() / 2, Constants.START_SCREEN_HEIGHT / 2 - win.getHeight() / 2, "GUI/Panels/message_panel.png");
+
+        field.addActor(message_window);
+
+        GuiButton ok = new GuiButton(Constants.START_SCREEN_WIDTH / 2 - win.getWidth() / 3, Constants.START_SCREEN_HEIGHT / 2 - win.getHeight() / 3, game, "GUI/Buttons/ok_button.png");
+
+        field.addActor(ok);
+        ok.setStage(game.getMain());
     }
 
 }

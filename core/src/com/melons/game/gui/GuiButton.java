@@ -12,7 +12,7 @@ import com.melons.game.interfaces.SizeChangable;
 
 public class GuiButton extends Actor implements SizeChangable {
 
-    private static Texture Image;
+    private Texture Image;
 
     float default_x;
     float default_y;
@@ -73,6 +73,7 @@ public class GuiButton extends Actor implements SizeChangable {
     }
 
     public void execute(){
+        System.out.println(toChange);
         game.changeStage(toChange);
     }
 

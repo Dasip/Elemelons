@@ -30,6 +30,8 @@ public class MelonCycle extends Game {
 	private MelonMage player;
 	private MelonMage enemy;
 
+	private ArrayList<Panel> fight_panels = new ArrayList<Panel>();
+
 	private Stage currentStage;
 	private FightController Mars;
 
@@ -42,14 +44,10 @@ public class MelonCycle extends Game {
 		fight = new Stage(new StretchViewport(960, 540));
 		//lib = new Stage(new FitViewport(960, 540));
 
-		HealthBar hp1 = new HealthBar(140, 300);
-		HealthBar hp2 = new HealthBar(690, 300);
 
-        player = new MelonMage(0, 0, hp1, this);
-        enemy = new MelonMage(100, 100, hp2, this);
 
 		// !========================! Создаем главное меню !========================! \\
-        com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/lib_panel.png");
+        com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/Panels/lib_panel.png");
         main.addActor(panel1);
 
         /*
@@ -77,20 +75,22 @@ public class MelonCycle extends Game {
 
 		// !========================================================================! \\
 
-        // !========================! Создаем поле боя !========================! \\
+		// !========================! Создаем поле боя !========================! \\
 
-        com.melons.game.gui.Panel panel2 = new com.melons.game.gui.Panel(0, 0, "GUI/Panel2.png");
-        fight.addActor(panel2);
+		com.melons.game.gui.Panel panel2 = new com.melons.game.gui.Panel(0, 0, "GUI/Panels/Panel2.png");
+		fight.addActor(panel2);
 
-        com.melons.game.gui.Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/melon_panel2.png");
-        fight.addActor(panel3);
+		com.melons.game.gui.Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/Panels/melon_panel2.png");
+		fight.addActor(panel3);
+
+		fight_panels.add(panel2);
+		fight_panels.add(panel3);
+
+		HealthBar hp1 = new HealthBar(140, 300);
+		player = new MelonMage(0, 0, hp1, this);
 
 
-
-        fight.addActor(hp1);
-        fight.addActor(hp2);
-
-        // !========================================================================! \\
+		// !========================================================================! \\
 
 		currentStage = main;
 		Gdx.input.setInputProcessor(currentStage);
@@ -108,22 +108,40 @@ public class MelonCycle extends Game {
 	}
 
 	public void organizeFight(){
-		Mars = createMars();
-	    currentStage.addActor(player);
-	    player.setCoords(150, 200);
+		System.out.println(currentStage.getActors());
+		while (currentStage.getActors().size != 0){
+			for (Actor i: currentStage.getActors()){
+				i.remove();
+			}
+		}
+		System.out.println(currentStage.getActors());
 
-	    currentStage.addActor(enemy);
-	    enemy.setCoords(700, 200);
+		for (Actor i: fight_panels){
+			currentStage.addActor(i);
+		}
+
+
+
+		currentStage.addActor(player);
+		currentStage.addActor(player.hpBar);
+		player.setCoords(150, 200);
+
+		enemy = generateEnemy();
+		currentStage.addActor(enemy);
+		currentStage.addActor(enemy.hpBar);
+		enemy.setCoords(700, 200);
+
+		Mars = createMars();
 
 		EndTurnButton end = new EndTurnButton(700, 410, this, "GUI/Buttons/turn_button.png", Mars);
-		fight.addActor(end);
+		currentStage.addActor(end);
 
 	    float x_step = 75;
 	    float x_delim = 100;
 	    int n = 0;
 	    float y_start = 20;
 	    for (Skill i: player.getSkills()){
-	        currentStage.addActor(i);
+			currentStage.addActor(i);
 	        i.setX(x_step * (n+1) + x_delim * n);
 	        i.setY(y_start);
 	        i.setController(Mars);
@@ -153,11 +171,20 @@ public class MelonCycle extends Game {
 		ArrayList<MelonMage> rivals = new ArrayList<>();
 		rivals.add(player);
 		rivals.add(enemy);
-		FightController M = new FightController(rivals, player, fight);
+		FightController M = new FightController(rivals, player, this, fight);
 		return M;
 	}
 
 	public void addResizable(SizeChangable s){
 		toResize.add(s);
 	}
+
+	public MelonMage generateEnemy(){
+		HealthBar hp = new HealthBar(300, 300);
+		fight.addActor(hp);
+		MelonMage enemy = new MelonMage(100, 100, hp, this);
+		return enemy;
+	}
+
+	public Stage getMain(){ return main; }
 }

@@ -14,6 +14,11 @@ public class EndTurnButton extends GuiButton{
 
     @Override
     public void execute() {
-        Mars.changeTurn();
+
+        if (Mars.getPickable()) {
+            Mars.changeTurn();
+
+        }
     }
+
 }
