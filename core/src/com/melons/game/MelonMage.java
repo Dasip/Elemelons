@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.melons.game.buffs.ElectricFieldBuff;
+import com.melons.game.buffs.ImmuneBuff;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Mark;
 import com.melons.game.interfaces.SizeChangable;
@@ -277,20 +278,32 @@ public class MelonMage extends Actor implements SizeChangable {
         }
     }
 
-    public ArrayList<SpellBuff> getImmunes(){
-        ArrayList<SpellBuff> immunes = new ArrayList<SpellBuff>();
+    public ArrayList<ImmuneBuff> getImmunes(){
+
+        ArrayList<ImmuneBuff> immunes = new ArrayList<>();
         for (SpellBuff i: buffs){
             if (i.getType() == Constants.IMMUNE){
-                immunes.add(i);
+                immunes.add( (ImmuneBuff) i);
             }
         }
         return immunes;
     }
 
     public void receiveSpell(Damage s){
-        receiveDamage(s.getDamage());
-        for (SpellBuff i: s.getBuffs()){
-            addBuff(i);
+
+        boolean canDamage = true;
+        for (ImmuneBuff i: getImmunes()){
+            if (i.checkImmune(s)){
+                canDamage = false;
+                break;
+            }
+        }
+
+        if (canDamage) {
+            receiveDamage(s.getDamage());
+            for (SpellBuff i : s.getBuffs()) {
+                addBuff(i);
+            }
         }
     }
 

@@ -18,6 +18,9 @@ public class ImmuneBuff extends SpellBuff {
         if (d.getElement() == element && durable && durability > 0){
             durability -= 1;
         }
+        if (durability == 0){
+            owner.addToRemove(this);
+        }
         return d.getElement() == element;
     }
 

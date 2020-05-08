@@ -16,6 +16,7 @@ import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Panel;
 import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.interfaces.SkillButton;
+import com.melons.game.skills.ElectricField;
 import com.melons.game.skills.Fireball;
 import com.melons.game.skills.FlameWave;
 import com.melons.game.skills.Lightning;
@@ -100,6 +101,7 @@ public class MelonCycle extends Game {
         player.addSkill(new Fireball(this));
         player.addSkill(new Lightning(this));
         player.addSkill(new FlameWave(this));
+        player.addSkill(new ElectricField(this));
         // !========================================================================! \\
 	}
 
