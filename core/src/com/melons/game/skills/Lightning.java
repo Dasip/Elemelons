@@ -19,7 +19,7 @@ public class Lightning extends Skill {
     @Override
     public void use() {
         super.use();
-        useOnTarget(target);
+        target.receiveSpell(this);
     }
 
     @Override

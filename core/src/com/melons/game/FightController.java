@@ -42,6 +42,7 @@ public class FightController {
         current_index = current_index >= rivals.size() - 1 ? 0 : current_index + 1;
         current_melon = rivals.get(current_index);
         current_melon.refreshSeeds();
+        current_melon.runOverBuffs();
         mustChange = false;
         if (current_melon != player){changeTurn();}
     }

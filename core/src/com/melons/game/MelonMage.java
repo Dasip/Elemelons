@@ -10,10 +10,9 @@ import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Mark;
 import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.skills.Skill;
+import com.melons.game.buffs.SpellBuff;
 
 import java.util.ArrayList;
-
-import javax.xml.soap.Text;
 
 
 public class MelonMage extends Actor implements SizeChangable {
@@ -21,6 +20,8 @@ public class MelonMage extends Actor implements SizeChangable {
     private Texture Image;
 
     ArrayList<Skill> skills = new ArrayList<>();
+    ArrayList<SpellBuff> buffs = new ArrayList<>();
+    ArrayList<SpellBuff> binBuffs = new ArrayList<>();
 
     private int max_seeds = 6;
     private int seeds = 6;
@@ -85,6 +86,7 @@ public class MelonMage extends Actor implements SizeChangable {
             }
         });
         g.addResizable(this);
+
     }
 
     public Texture getImage(){ return Image; }
@@ -113,6 +115,34 @@ public class MelonMage extends Actor implements SizeChangable {
     public void giveMarsVictim(){
         System.out.println("Executed Order 66");
         Mars.pickMelon(this);
+    }
+
+    public void addBuff(SpellBuff s){
+        s.setOwner(this);
+        buffs.add(s);
+    }
+
+    public void removeBuff(SpellBuff s){
+        buffs.remove(s);
+    }
+
+    public void addToRemove(SpellBuff a){
+        binBuffs.add(a);
+    }
+
+    public void runOverBuffs(){
+
+        ArrayList<SpellBuff> temp = buffs;
+
+        for (SpellBuff i : temp) {
+            i.use();
+        }
+
+        for (SpellBuff i: binBuffs){
+            removeBuff(i);
+        }
+        binBuffs = new ArrayList<>();
+
     }
 
     @Override
@@ -239,6 +269,10 @@ public class MelonMage extends Actor implements SizeChangable {
         for (int i=0; i<seedPanel.size(); i++){
             seedPanel.set(i, new Texture("GUI/Seeds/seedFull.png"));
         }
+    }
+
+    public void receiveSpell(Skill s){
+        s.useOnTarget(this);
     }
 
 }

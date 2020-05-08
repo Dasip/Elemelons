@@ -17,6 +17,7 @@ import com.melons.game.gui.Panel;
 import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.interfaces.SkillButton;
 import com.melons.game.skills.Fireball;
+import com.melons.game.skills.FlameWave;
 import com.melons.game.skills.Lightning;
 import com.melons.game.skills.Skill;
 
@@ -97,7 +98,8 @@ public class MelonCycle extends Game {
 
         // !========================! Учим персонажа навыкам !========================! \\
         player.addSkill(new Fireball(this));
-        player.addSkill(new Lightning(this));
+       // player.addSkill(new Lightning(this));
+        player.addSkill(new FlameWave(this));
         // !========================================================================! \\
 	}
 
@@ -119,8 +121,6 @@ public class MelonCycle extends Game {
 		for (Actor i: fight_panels){
 			currentStage.addActor(i);
 		}
-
-
 
 		currentStage.addActor(player);
 		currentStage.addActor(player.hpBar);
