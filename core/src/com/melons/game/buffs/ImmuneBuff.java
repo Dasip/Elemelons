@@ -17,11 +17,12 @@ public class ImmuneBuff extends SpellBuff {
     public boolean checkImmune(Damage d){
         if (d.getElement() == element && durable && durability > 0){
             durability -= 1;
+            if (durability == 0){
+                owner.removeBuff(this);
+            }
+            return true;
         }
-        if (durability == 0){
-            owner.addToRemove(this);
-        }
-        return d.getElement() == element;
+        return false;
     }
 
     @Override

@@ -88,9 +88,7 @@ public class MelonMage extends Actor implements SizeChangable {
             }
         });
         g.addResizable(this);
-
-        SpellBuff a = new ElectricFieldBuff();
-        addBuff(a);
+        
     }
 
     public Texture getImage(){ return Image; }

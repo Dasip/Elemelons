@@ -7,7 +7,7 @@ public class ElectricFieldBuff extends ImmuneBuff {
 
     public ElectricFieldBuff(){
         this.durable = true;
-        this.durability = 3;
+        this.durability = 2;
         this.limited = true;
         this.duration = 2;
         texture = new Texture("Buffs/ElectricField.png");
