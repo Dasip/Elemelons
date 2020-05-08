@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.melons.game.buffs.ElectricFieldBuff;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Mark;
 import com.melons.game.interfaces.SizeChangable;
@@ -87,6 +88,8 @@ public class MelonMage extends Actor implements SizeChangable {
         });
         g.addResizable(this);
 
+        SpellBuff a = new ElectricFieldBuff();
+        addBuff(a);
     }
 
     public Texture getImage(){ return Image; }
@@ -190,6 +193,9 @@ public class MelonMage extends Actor implements SizeChangable {
         }
 
         batch.draw(Image, this.x ,this.y);
+        for (SpellBuff i: buffs){
+            i.draw(batch);
+        }
         //System.out.println(seedPanel);
         mark.updateStateTime();
 
@@ -271,8 +277,21 @@ public class MelonMage extends Actor implements SizeChangable {
         }
     }
 
-    public void receiveSpell(Skill s){
-        s.useOnTarget(this);
+    public ArrayList<SpellBuff> getImmunes(){
+        ArrayList<SpellBuff> immunes = new ArrayList<SpellBuff>();
+        for (SpellBuff i: buffs){
+            if (i.getType() == Constants.IMMUNE){
+                immunes.add(i);
+            }
+        }
+        return immunes;
+    }
+
+    public void receiveSpell(Damage s){
+        receiveDamage(s.getDamage());
+        for (SpellBuff i: s.getBuffs()){
+            addBuff(i);
+        }
     }
 
 }

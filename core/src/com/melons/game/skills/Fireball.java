@@ -1,6 +1,8 @@
 package com.melons.game.skills;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.melons.game.Constants;
+import com.melons.game.Damage;
 import com.melons.game.MelonCycle;
 import com.melons.game.MelonMage;
 import com.melons.game.spelleffects.Effect;
@@ -12,14 +14,14 @@ public class Fireball extends Skill {
         super(g);
         img = new Texture("Runes/Fireball.png");
         this.name = "Fireball";
-        this.damage = 8;
+        this.damage = 5;
         seedToUse = 1;
     }
 
     @Override
     public void use() {
         super.use();
-        target.receiveSpell(this);
+        target.receiveSpell(new Damage(damage, Constants.FIRE));
     }
 
     @Override

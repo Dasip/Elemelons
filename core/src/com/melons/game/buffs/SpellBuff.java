@@ -1,7 +1,7 @@
 package com.melons.game.buffs;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.melons.game.MelonMage;
 import com.melons.game.skills.Skill;
 
@@ -31,7 +31,7 @@ public class SpellBuff {
         }
     }
 
-    public void draW(SpriteBatch batch){
+    public void draw(Batch batch){
         batch.draw(texture, owner.getX(), owner.getY());
     }
 

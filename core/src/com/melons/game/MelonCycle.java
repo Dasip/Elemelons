@@ -98,7 +98,7 @@ public class MelonCycle extends Game {
 
         // !========================! Учим персонажа навыкам !========================! \\
         player.addSkill(new Fireball(this));
-       // player.addSkill(new Lightning(this));
+        player.addSkill(new Lightning(this));
         player.addSkill(new FlameWave(this));
         // !========================================================================! \\
 	}

@@ -1,6 +1,8 @@
 package com.melons.game.skills;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.melons.game.Constants;
+import com.melons.game.Damage;
 import com.melons.game.MelonCycle;
 import com.melons.game.MelonMage;
 import com.melons.game.spelleffects.Effect;
@@ -19,7 +21,7 @@ public class Lightning extends Skill {
     @Override
     public void use() {
         super.use();
-        target.receiveSpell(this);
+        target.receiveSpell(new Damage(damage, Constants.ELECTRIC));
     }
 
     @Override
