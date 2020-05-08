@@ -10,6 +10,8 @@ public class Constants {
     public static final int START_SCREEN_WIDTH = 960;
     public static final int START_SCREEN_HEIGHT = 540;
 
+    public static final int MAX_SKILLS = 3;
+
     public static final String IMMUNE = "immune";
     public static final String CURSE = "curse";
     public static final String BLESS = "bless";

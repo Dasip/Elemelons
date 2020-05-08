@@ -56,6 +56,10 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
         g.addResizable(this);
     }
 
+    public String getTextureName(){
+        return name;
+    }
+
     @Override
     public void setController(FightController m){
         Mars = m;

@@ -40,9 +40,6 @@ public class Panel extends Actor {
 
     public void disposeImage(){
         Text.dispose();
-        for (RuneButton i: runes){
-            i.dispose();
-        }
     }
 
     @Override

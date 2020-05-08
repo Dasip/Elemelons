@@ -42,9 +42,9 @@ public class MelonCycle extends Game {
 	@Override
 	public void create () {
 
-		main = new Stage(new StretchViewport(960, 540));
-		fight = new Stage(new StretchViewport(960, 540));
-		//lib = new Stage(new FitViewport(960, 540));
+		main = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
+		fight = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
+		lib = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 
 
 
@@ -66,14 +66,23 @@ public class MelonCycle extends Game {
 		main.addActor(gui1);
 		gui1.setStage(fight);
 
+		gui1 = new GuiButton(100, 200, this, "GUI/Buttons/lib_button.png");
+		main.addActor(gui1);
+		gui1.setStage(lib);
+
 		// !========================================================================! \\
 
 		// !========================! Создаем меню лавки знаний !========================! \\
-		/*
 
-		GuiButton gui2 = new GuiButton(200, 200, this);
+		panel1 = new Panel(0, 0, "GUI/Panels/Panel.png");
+		lib.addActor(panel1);
+
+		panel1 = new Panel(panel1.getWidth()+1, 0, "GUI/Panels/melon_panel.png");
+		lib.addActor(panel1);
+
+		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "GUI/Buttons/main_button.png");
 		lib.addActor(gui2);
-		gui2.setStage(main);*/
+		gui2.setStage(main);
 
 		// !========================================================================! \\
 
@@ -100,7 +109,7 @@ public class MelonCycle extends Game {
         // !========================! Учим персонажа навыкам !========================! \\
         player.addSkill(new Fireball(this));
         player.addSkill(new Lightning(this));
-        player.addSkill(new FlameWave(this));
+       // player.addSkill(new FlameWave(this));
         player.addSkill(new ElectricField(this));
         // !========================================================================! \\
 	}
@@ -152,12 +161,24 @@ public class MelonCycle extends Game {
         }
     }
 
+    public void openLib(){
+		int start_y = Constants.START_SCREEN_HEIGHT - 150;
+		for (Skill i: player.getSkills()){
+			RuneButton r = new RuneButton(25, start_y, i);
+			lib.addActor(r);
+			start_y -= 120;
+		}
+	}
+
 	public void changeStage(Stage s){
 		currentStage = s;
 		Gdx.input.setInputProcessor(currentStage);
 		if (s == fight){
 		    organizeFight();
         }
+		else if(s == lib){
+			openLib();
+		}
 	}
 
 	@Override

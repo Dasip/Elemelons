@@ -88,13 +88,15 @@ public class MelonMage extends Actor implements SizeChangable {
             }
         });
         g.addResizable(this);
-        
+
     }
 
     public Texture getImage(){ return Image; }
 
     public void addSkill(Skill s){
-        skills.add(s);
+        if (skills.size() < Constants.MAX_SKILLS) {
+            skills.add(s);
+        }
     }
 
     public ArrayList<Skill> getSkills(){
@@ -195,7 +197,7 @@ public class MelonMage extends Actor implements SizeChangable {
         for (SpellBuff i: buffs){
             i.draw(batch);
         }
-        //System.out.println(seedPanel);
+
         mark.updateStateTime();
 
         if (marked){
@@ -274,6 +276,7 @@ public class MelonMage extends Actor implements SizeChangable {
         for (int i=0; i<seedPanel.size(); i++){
             seedPanel.set(i, new Texture("GUI/Seeds/seedFull.png"));
         }
+        buffs = new ArrayList<>();
     }
 
     public ArrayList<ImmuneBuff> getImmunes(){
