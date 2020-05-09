@@ -1,8 +1,11 @@
-package com.melons.game;
+package com.melons.game.controllers;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.melons.game.Constants;
+import com.melons.game.MelonCycle;
+import com.melons.game.MelonMage;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.Panel;
 import com.melons.game.skills.Skill;

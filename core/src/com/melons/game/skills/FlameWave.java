@@ -14,10 +14,19 @@ public class FlameWave extends Skill {
 
     public FlameWave(MelonCycle g) {
         super(g);
+    }
+
+    public FlameWave(){
+        super();
+    }
+
+    @Override
+    public void setDef() {
         this.name = "FlameWave";
         this.damage = 5;
         this.seedToUse = 2;
         this.img = new Texture("Runes/FlameWave.png");
+        this.description = "Flamewave hits an enemy with fire every turn for 2 turns";
     }
 
     @Override

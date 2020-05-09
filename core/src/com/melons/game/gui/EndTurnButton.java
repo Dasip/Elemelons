@@ -1,6 +1,6 @@
 package com.melons.game.gui;
 
-import com.melons.game.FightController;
+import com.melons.game.controllers.FightController;
 import com.melons.game.MelonCycle;
 
 public class EndTurnButton extends GuiButton{

@@ -73,7 +73,6 @@ public class GuiButton extends Actor implements SizeChangable {
     }
 
     public void execute(){
-        System.out.println(toChange);
         game.changeStage(toChange);
     }
 
@@ -93,7 +92,6 @@ public class GuiButton extends Actor implements SizeChangable {
             float by = default_y / start_screen_height * nh;
             float width = default_width / start_screen_width * nw;
             float height = default_height / start_screen_height * nh;
-            System.out.println(width + " " + height);
             setBounds(bx, by, width, height);
         }
     }

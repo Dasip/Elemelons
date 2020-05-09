@@ -12,10 +12,19 @@ public class Fireball extends Skill {
 
     public Fireball(MelonCycle g) {
         super(g);
+    }
+
+    public Fireball(){
+        super();
+    }
+
+    @Override
+    public void setDef(){
         img = new Texture("Runes/Fireball.png");
         this.name = "Fireball";
         this.damage = 5;
         seedToUse = 1;
+        this.description = "Fireball - damages enemies with fire. Classic";
     }
 
     @Override

@@ -2,23 +2,20 @@ package com.melons.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.melons.game.controllers.FightController;
 import com.melons.game.gui.EndTurnButton;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
+import com.melons.game.gui.PageButton;
 import com.melons.game.gui.Panel;
+import com.melons.game.gui.RuneContainer;
 import com.melons.game.interfaces.SizeChangable;
-import com.melons.game.interfaces.SkillButton;
 import com.melons.game.skills.ElectricField;
 import com.melons.game.skills.Fireball;
-import com.melons.game.skills.FlameWave;
 import com.melons.game.skills.Lightning;
 import com.melons.game.skills.Skill;
 
@@ -35,7 +32,7 @@ public class MelonCycle extends Game {
 	private ArrayList<Panel> fight_panels = new ArrayList<Panel>();
 
 	private Stage currentStage;
-	private FightController Mars;
+	private com.melons.game.controllers.FightController Mars;
 
 	ArrayList<com.melons.game.interfaces.SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
@@ -77,12 +74,22 @@ public class MelonCycle extends Game {
 		panel1 = new Panel(0, 0, "GUI/Panels/Panel.png");
 		lib.addActor(panel1);
 
-		panel1 = new Panel(panel1.getWidth()+1, 0, "GUI/Panels/melon_panel.png");
-		lib.addActor(panel1);
+		Panel panel4 = new Panel(panel1.getWidth()+1, 0, "GUI/Panels/melon_panel.png");
+		lib.addActor(panel4);
 
 		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "GUI/Buttons/main_button.png");
 		lib.addActor(gui2);
 		gui2.setStage(main);
+
+		RuneContainer cont = new RuneContainer(panel1.getWidth()+1, 0, Constants.START_SCREEN_WIDTH-250-panel1.getWidth(), Constants.START_SCREEN_HEIGHT, lib, this);
+		lib.addActor(cont);
+		cont.setRunes(Constants.GET_SKILLS());
+
+		PageButton pb1 = new PageButton(panel1.getWidth()+100, 20, this, "GUI/Buttons/left_button.png", cont, -1);
+		lib.addActor(pb1);
+
+		PageButton pb2 = new PageButton(panel1.getWidth()+400, 20, this, "GUI/Buttons/right_button.png", cont, 1);
+		lib.addActor(pb2);
 
 		// !========================================================================! \\
 
@@ -109,7 +116,7 @@ public class MelonCycle extends Game {
         // !========================! Учим персонажа навыкам !========================! \\
         player.addSkill(new Fireball(this));
         player.addSkill(new Lightning(this));
-       // player.addSkill(new FlameWave(this));
+        //player.addSkill(new FlameWave(this));
         player.addSkill(new ElectricField(this));
         // !========================================================================! \\
 	}
@@ -164,7 +171,7 @@ public class MelonCycle extends Game {
     public void openLib(){
 		int start_y = Constants.START_SCREEN_HEIGHT - 150;
 		for (Skill i: player.getSkills()){
-			RuneButton r = new RuneButton(25, start_y, i);
+			RuneButton r = new RuneButton(25, start_y, this, i);
 			lib.addActor(r);
 			start_y -= 120;
 		}
@@ -190,11 +197,11 @@ public class MelonCycle extends Game {
 		}
 	}
 
-	public FightController createMars(){
+	public com.melons.game.controllers.FightController createMars(){
 		ArrayList<MelonMage> rivals = new ArrayList<>();
 		rivals.add(player);
 		rivals.add(enemy);
-		FightController M = new FightController(rivals, player, this, fight);
+		com.melons.game.controllers.FightController M = new FightController(rivals, player, this, fight);
 		return M;
 	}
 

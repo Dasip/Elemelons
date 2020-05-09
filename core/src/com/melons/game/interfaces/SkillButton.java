@@ -1,7 +1,6 @@
 package com.melons.game.interfaces;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.melons.game.FightController;
+import com.melons.game.controllers.FightController;
 import com.melons.game.MelonMage;
 
 public interface SkillButton {
@@ -13,4 +12,5 @@ public interface SkillButton {
     public void setTarget(MelonMage speller, MelonMage target);
     public int getSeeds();
     public void setOwner(MelonMage a);
+    public void setDef();
 }

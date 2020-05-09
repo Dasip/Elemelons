@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.melons.game.FightController;
+import com.melons.game.controllers.FightController;
 import com.melons.game.MelonCycle;
 import com.melons.game.MelonMage;
 import com.melons.game.interfaces.SizeChangable;
@@ -36,7 +36,8 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     FightController Mars;
 
-    String name = "Skill";
+    protected String name = "Skill";
+    protected String description;
     int damage = 10;
 
     public Skill(MelonCycle g){
@@ -54,10 +55,32 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
             }
         });
         g.addResizable(this);
+        setDef();
+    }
+
+    public Skill(){
+        x = 0;
+        y = 0;
+        setX(0);
+        setY(0);
+        setBounds(0, 0, img.getWidth(), img.getHeight());
+        setTouchable(Touchable.enabled);
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                pick();
+                return true;
+            }
+        });
+        setDef();
     }
 
     public String getTextureName(){
         return name;
+    }
+
+    public String getDescription(){
+        return description;
     }
 
     @Override
@@ -137,6 +160,11 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     @Override
     public void setOwner(MelonMage a) {
         owner = a;
+    }
+
+    @Override
+    public void setDef() {
+
     }
 
     @Override

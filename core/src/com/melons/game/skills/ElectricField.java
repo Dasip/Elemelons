@@ -8,10 +8,19 @@ public class ElectricField extends Skill {
 
     public ElectricField(MelonCycle g) {
         super(g);
+    }
+
+    public ElectricField(){
+        super();
+    }
+
+    @Override
+    public void setDef() {
         this.name = "ElectricField";
         this.damage = 0;
         this.seedToUse = 3;
         this.img = new Texture("Runes/ElectricField.png");
+        this.description = "Electric field. protects from lightnings";
     }
 
     @Override

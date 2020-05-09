@@ -12,20 +12,21 @@ import java.util.ArrayList;
 
 public class Panel extends Actor {
 
-    private Sprite Image;
-    private Texture Text;
-    private float x;
-    private float y;
-    private ArrayList<RuneButton> runes;
+    protected Sprite Image;
+    protected Texture Text;
+    protected float x;
+    protected float y;
+
 
     public Panel(float x, float y, String path){
         this.x = x;
         this.y = y;
-        Text = new Texture(path);
-        Image = new Sprite(Text);
-        runes = new ArrayList<RuneButton>();
-        Image.setX(x);
-        Image.setY(y);
+        if (path != "null") {
+            Text = new Texture(path);
+            Image = new Sprite(Text);
+            Image.setX(x);
+            Image.setY(y);
+        }
 
     }
 

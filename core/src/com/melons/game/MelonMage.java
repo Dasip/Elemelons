@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.melons.game.buffs.ElectricFieldBuff;
 import com.melons.game.buffs.ImmuneBuff;
+import com.melons.game.controllers.FightController;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Mark;
 import com.melons.game.interfaces.SizeChangable;
@@ -44,7 +44,7 @@ public class MelonMage extends Actor implements SizeChangable {
     private boolean shaded = false;
     private boolean marked = false;
 
-    FightController Mars;
+    com.melons.game.controllers.FightController Mars;
 
     int hp = 100;
     int max_hp = 100;

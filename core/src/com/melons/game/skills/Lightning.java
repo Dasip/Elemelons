@@ -12,10 +12,19 @@ public class Lightning extends Skill {
 
     public Lightning(MelonCycle g) {
         super(g);
+    }
+
+    public Lightning(){
+        super();
+    }
+
+    @Override
+    public void setDef() {
         img = new Texture("Runes/Lightning.png");
         this.name = "Lightning";
         this.damage = 15;
         seedToUse = 2;
+        this.description = "Bolt Lightning - hits the enemy with elecrical shock strike";
     }
 
     @Override
