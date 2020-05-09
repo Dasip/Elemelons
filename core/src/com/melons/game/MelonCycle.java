@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
 import com.melons.game.controllers.LibController;
+import com.melons.game.gui.CurrentContainer;
 import com.melons.game.gui.DescContainer;
 import com.melons.game.gui.EndTurnButton;
 import com.melons.game.gui.GuiButton;
@@ -37,6 +38,9 @@ public class MelonCycle extends Game {
 	private FightController Mars;
 	private LibController Minerva;
 
+	private DescContainer desc;
+	private CurrentContainer curr;
+
 	ArrayList<SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
 	@Override
@@ -46,7 +50,7 @@ public class MelonCycle extends Game {
 		fight = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 		lib = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 
-		Minerva = new LibController();
+		Minerva = new LibController(this);
 
 		// !========================! Создаем главное меню !========================! \\
         Panel panel1 = new Panel(0, 0, "GUI/Panels/lib_panel.png");
@@ -94,10 +98,14 @@ public class MelonCycle extends Game {
 		PageButton pb2 = new PageButton(panel1.getWidth()+400, 20, this, "GUI/Buttons/right_button.png", cont, 1);
 		lib.addActor(pb2);
 
-		DescContainer desc = new DescContainer(675, 0, 525, Constants.START_SCREEN_HEIGHT);
+		desc = new DescContainer(675, 0, 525, Constants.START_SCREEN_HEIGHT, lib, this);
 		lib.addActor(desc);
 
+		curr = new CurrentContainer(0, 0, 150, Constants.START_SCREEN_HEIGHT, lib);
+		lib.addActor(curr);
+
 		Minerva.addDesc(desc);
+		Minerva.addCurr(curr);
 
 		// !========================================================================! \\
 
@@ -125,7 +133,7 @@ public class MelonCycle extends Game {
         player.addSkill(new Fireball(this));
         player.addSkill(new Lightning(this));
         //player.addSkill(new FlameWave(this));
-        player.addSkill(new ElectricField(this));
+        //player.addSkill(new ElectricField(this));
         // !========================================================================! \\
 	}
 
@@ -177,12 +185,22 @@ public class MelonCycle extends Game {
     }
 
     public void openLib(){
-		int start_y = Constants.START_SCREEN_HEIGHT - 150;
+	    desc.setRune(null);
+	    Minerva.updateCurrent();
+
+	}
+
+	public MelonMage getPlayer(){
+		return player;
+	}
+
+	public ArrayList<RuneButton> getPlayerRunes(){
+		ArrayList<RuneButton> runes = new ArrayList<>();
 		for (Skill i: player.getSkills()){
-			RuneButton r = new RuneButton(25, start_y, this, i);
-			lib.addActor(r);
-			start_y -= 120;
+			RuneButton r = new RuneButton(0, 0, this, i);
+			runes.add(r);
 		}
+		return runes;
 	}
 
 	public void changeStage(Stage s){

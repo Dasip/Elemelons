@@ -7,26 +7,24 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
 import com.melons.game.interfaces.SizeChangable;
 
 public class GuiButton extends Actor implements SizeChangable {
 
-    private Texture Image;
+    protected Texture Image;
 
-    float default_x;
-    float default_y;
+    protected float default_x;
+    protected float default_y;
 
-    float default_width ;
-    float default_height;
+    protected float default_width;
+    protected float default_height;
 
-    float start_screen_width = 0;
-    float start_screen_height = 0;
+    protected float x;
+    protected float y;
 
-    private float x;
-    private float y;
-
-    private MelonCycle game;
+    protected MelonCycle game;
     Stage toChange;
 
     public GuiButton(float x, float y, final MelonCycle g, String path){
@@ -83,17 +81,12 @@ public class GuiButton extends Actor implements SizeChangable {
 
     @Override
     public void resize(int nw, int nh) {
-        if (start_screen_height == 0 && start_screen_width == 0){
-            start_screen_height = nh;
-            start_screen_width = nw;
-        }
-        else{
-            float bx = default_x / start_screen_width * nw;
-            float by = default_y / start_screen_height * nh;
-            float width = default_width / start_screen_width * nw;
-            float height = default_height / start_screen_height * nh;
-            setBounds(bx, by, width, height);
-        }
+        float bx = default_x / Constants.START_SCREEN_WIDTH * nw;
+        float by = default_y / Constants.START_SCREEN_HEIGHT * nh;
+        float width = default_width / Constants.START_SCREEN_WIDTH * nw;
+        float height = default_height / Constants.START_SCREEN_HEIGHT * nh;
+        setBounds(bx, by, width, height);
     }
 }
+
 

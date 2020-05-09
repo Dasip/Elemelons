@@ -17,6 +17,8 @@ public class RuneButton extends Actor implements SizeChangable {
     private String desc;  // Описание скилла
     private MelonCycle game;
 
+    private String runeName;
+
     private float x;
     private float y;
     private float default_x;
@@ -36,6 +38,7 @@ public class RuneButton extends Actor implements SizeChangable {
         default_height = Image.getHeight();
 
         this.desc = s.getDescription();
+        this.runeName = s.getTextureName();
 
         setBounds(x, y, default_width, default_height);
         setTouchable(Touchable.enabled);
@@ -65,6 +68,8 @@ public class RuneButton extends Actor implements SizeChangable {
     public String getDesc(){
         return desc;
     }
+
+    public String getRuneName(){return runeName;}
 
     @Override
     public void resize(int new_width, int new_height) {

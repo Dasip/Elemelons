@@ -49,7 +49,9 @@ public class Panel extends Actor {
     }
 
     public void drawAll(Batch b){
-        Image.draw(b);
+        if (Image != null) {
+            Image.draw(b);
+        }
 
     }
 

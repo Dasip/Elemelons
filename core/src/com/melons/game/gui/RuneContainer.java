@@ -71,7 +71,7 @@ public class RuneContainer extends Panel {
 
     public void showRunes(int page){
         System.out.println(page);
-        if (page > 0 && !(runeVolume*(page-1) > runes.size())) {
+        if (page > 0 && !(runeVolume*(page-1) >= runes.size())) {
             clearRunes();
 
             int xStep = 120;

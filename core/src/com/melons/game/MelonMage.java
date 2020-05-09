@@ -93,14 +93,35 @@ public class MelonMage extends Actor implements SizeChangable {
 
     public Texture getImage(){ return Image; }
 
-    public void addSkill(Skill s){
+    public boolean addSkill(Skill s){
         if (skills.size() < Constants.MAX_SKILLS) {
             skills.add(s);
+            return true;
         }
+        return false;
     }
 
     public ArrayList<Skill> getSkills(){
         return skills;
+    }
+
+    public boolean removeSkill(String name){
+        for (Skill i: skills){
+            if (i.getTextureName() == name){
+                skills.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isSkillLearnt(String name){
+        for (Skill i: skills){
+            if (i.getTextureName() == name){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setCoords(float x, float y){

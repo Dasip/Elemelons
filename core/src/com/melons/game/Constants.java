@@ -33,22 +33,19 @@ public class Constants {
     public static ArrayList<Skill> GET_SKILLS(){
         ArrayList<Skill> skills = new ArrayList<>();
         skills.add(new Fireball());
-        skills.add(new Fireball());
-        skills.add(new Fireball());
-        skills.add(new Fireball());
-        skills.add(new Lightning());
-        skills.add(new Lightning());
-        skills.add(new Lightning());
         skills.add(new Lightning());
         skills.add(new FlameWave());
-        skills.add(new FlameWave());
-        skills.add(new FlameWave());
-        skills.add(new FlameWave());
-        skills.add(new ElectricField());
-        skills.add(new ElectricField());
-        skills.add(new ElectricField());
         skills.add(new ElectricField());
         return skills;
+    }
+
+    public static Skill GET_SKILL_BY_NAME(String name){
+        for (Skill i: GET_SKILLS()){
+            if (i.getTextureName() == name) {
+                return i;
+            }
+        }
+        return new Fireball();
     }
 
 

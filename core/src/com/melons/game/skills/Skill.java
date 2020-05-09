@@ -14,7 +14,7 @@ import com.melons.game.interfaces.SkillButton;
 
 public class Skill extends Actor implements SizeChangable, SkillButton {
 
-    Texture img = new Texture("Runes/Fireball.png");
+    Texture img = new Texture("Runes/Empty.png");
 
     protected MelonMage owner;
     MelonMage speller;
@@ -36,8 +36,8 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     FightController Mars;
 
-    protected String name = "Skill";
-    protected String description;
+    protected String name = "Empty";
+    protected String description = "Empty slot.\nYou can equip\nsome spells\nfrom the list";
     int damage = 10;
 
     public Skill(MelonCycle g){
