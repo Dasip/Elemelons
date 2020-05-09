@@ -59,6 +59,16 @@ public class RuneContainer extends Panel {
         }
     }
 
+    @Override
+    public float getHeight() {
+        return height;
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
     public void showRunes(int page){
         System.out.println(page);
         if (page > 0 && !(runeVolume*(page-1) > runes.size())) {

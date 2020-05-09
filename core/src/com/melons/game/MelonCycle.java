@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
+import com.melons.game.controllers.LibController;
+import com.melons.game.gui.DescContainer;
 import com.melons.game.gui.EndTurnButton;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
@@ -32,9 +34,10 @@ public class MelonCycle extends Game {
 	private ArrayList<Panel> fight_panels = new ArrayList<Panel>();
 
 	private Stage currentStage;
-	private com.melons.game.controllers.FightController Mars;
+	private FightController Mars;
+	private LibController Minerva;
 
-	ArrayList<com.melons.game.interfaces.SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
+	ArrayList<SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
 	@Override
 	public void create () {
@@ -43,10 +46,10 @@ public class MelonCycle extends Game {
 		fight = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 		lib = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 
-
+		Minerva = new LibController();
 
 		// !========================! Создаем главное меню !========================! \\
-        com.melons.game.gui.Panel panel1 = new com.melons.game.gui.Panel(0, 0, "GUI/Panels/lib_panel.png");
+        Panel panel1 = new Panel(0, 0, "GUI/Panels/lib_panel.png");
         main.addActor(panel1);
 
         /*
@@ -59,7 +62,7 @@ public class MelonCycle extends Game {
 		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
 		main.addActor(custom);*/
 
-		com.melons.game.gui.GuiButton gui1 = new GuiButton(100, 400, this, "GUI/Buttons/fight_button.png");
+		GuiButton gui1 = new GuiButton(100, 400, this, "GUI/Buttons/fight_button.png");
 		main.addActor(gui1);
 		gui1.setStage(fight);
 
@@ -81,7 +84,7 @@ public class MelonCycle extends Game {
 		lib.addActor(gui2);
 		gui2.setStage(main);
 
-		RuneContainer cont = new RuneContainer(panel1.getWidth()+1, 0, Constants.START_SCREEN_WIDTH-250-panel1.getWidth(), Constants.START_SCREEN_HEIGHT, lib, this);
+		RuneContainer cont = new RuneContainer(panel1.getWidth()+1, 0, 525, Constants.START_SCREEN_HEIGHT, lib, this);
 		lib.addActor(cont);
 		cont.setRunes(Constants.GET_SKILLS());
 
@@ -90,6 +93,11 @@ public class MelonCycle extends Game {
 
 		PageButton pb2 = new PageButton(panel1.getWidth()+400, 20, this, "GUI/Buttons/right_button.png", cont, 1);
 		lib.addActor(pb2);
+
+		DescContainer desc = new DescContainer(675, 0, 525, Constants.START_SCREEN_HEIGHT);
+		lib.addActor(desc);
+
+		Minerva.addDesc(desc);
 
 		// !========================================================================! \\
 
@@ -217,4 +225,8 @@ public class MelonCycle extends Game {
 	}
 
 	public Stage getMain(){ return main; }
+
+	public LibController getMinerva() {
+		return Minerva;
+	}
 }

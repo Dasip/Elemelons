@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.melons.game.controllers.LibController;
 import com.melons.game.interfaces.SizeChangable;
 import com.melons.game.skills.Skill;
 
@@ -14,6 +15,7 @@ public class RuneButton extends Actor implements SizeChangable {
 
     private Texture Image;
     private String desc;  // Описание скилла
+    private MelonCycle game;
 
     private float x;
     private float y;
@@ -44,6 +46,7 @@ public class RuneButton extends Actor implements SizeChangable {
                 return true;
             }
         });
+        game = g;
         g.addResizable(this);
     }
 
@@ -53,6 +56,14 @@ public class RuneButton extends Actor implements SizeChangable {
 
     public void setDesc(String d){
         desc = d;
+    }
+
+    public Texture getImage(){
+        return Image;
+    }
+
+    public String getDesc(){
+        return desc;
     }
 
     @Override
@@ -68,7 +79,8 @@ public class RuneButton extends Actor implements SizeChangable {
     }
 
     public void pick(){
-        System.out.println(desc);
+        LibController Minerva = game.getMinerva();
+        Minerva.setRune(this);
     }
 
     @Override

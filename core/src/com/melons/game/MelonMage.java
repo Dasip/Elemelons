@@ -117,7 +117,6 @@ public class MelonMage extends Actor implements SizeChangable {
     }
 
     public void giveMarsVictim(){
-        System.out.println("Executed Order 66");
         Mars.pickMelon(this);
     }
 

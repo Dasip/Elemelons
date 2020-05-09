@@ -48,9 +48,6 @@ public class Constants {
         skills.add(new ElectricField());
         skills.add(new ElectricField());
         skills.add(new ElectricField());
-        skills.add(new ElectricField());
-        skills.add(new ElectricField());
-        skills.add(new ElectricField());
         return skills;
     }
 
