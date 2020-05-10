@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
@@ -14,14 +12,13 @@ import com.melons.game.controllers.LibController;
 import com.melons.game.gui.CurrentContainer;
 import com.melons.game.gui.DescContainer;
 import com.melons.game.gui.EndTurnButton;
+import com.melons.game.gui.EnterButton;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
-import com.melons.game.gui.MyTextInput;
 import com.melons.game.gui.PageButton;
 import com.melons.game.gui.Panel;
 import com.melons.game.gui.RuneContainer;
 import com.melons.game.interfaces.SizeChangable;
-import com.melons.game.skills.ElectricField;
 import com.melons.game.skills.Fireball;
 import com.melons.game.skills.Lightning;
 import com.melons.game.skills.Skill;
@@ -35,6 +32,10 @@ public class MelonCycle extends Game {
 	private Stage lib;
 	private Stage fight;
 	private Stage login;
+	private Stage register;
+
+	private StretchViewport viewport = new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT);
+
 	private MelonMage player;
 	private MelonMage enemy;
 
@@ -50,16 +51,20 @@ public class MelonCycle extends Game {
 	private TextField loginField;
 	private TextField passwordField;
 
+	private TextField newLoginField;
+	private TextField newPasswordField;
+
 
 	ArrayList<SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
 	@Override
 	public void create () {
 
-		main = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
-		fight = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
-		lib = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
-		login = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
+		main = new Stage(viewport);
+		fight = new Stage(viewport);
+		lib = new Stage(viewport);
+		login = new Stage(viewport);
+		register = new Stage(viewport);
 
 		Minerva = new LibController(this);
 
@@ -74,7 +79,6 @@ public class MelonCycle extends Game {
 		loginField.setY(Constants.START_SCREEN_HEIGHT-180);
 		loginField.setBounds(loginField.getX(), loginField.getY(), 300, 80);
 
-
 		passwordField = new TextField("", Constants.getSkin());
 		login.addActor(passwordField);
 		passwordField.setX(Constants.START_SCREEN_WIDTH/2+50);
@@ -83,11 +87,42 @@ public class MelonCycle extends Game {
 		passwordField.setPasswordCharacter('*');
 		passwordField.setPasswordMode(true);
 
-        TextButton button23 = new TextButton("Click me", Constants.getSkin(), "default");
+		EnterButton button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3+40, this, "Войти", "login");
         login.addActor(button23);
-        button23.setX(40);
-        button23.setY(40);
 
+        GuiButton butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/5, this, "Новый аккаунт");
+        login.addActor(butt333);
+        butt333.setStage(register);
+
+		butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/40, this, "В игру");
+		login.addActor(butt333);
+		butt333.setStage(main);
+
+        // !========================! Создаем меню регистрации !========================! \\
+
+        panellog = new Panel(0, 0, "GUI/Panels/lib_panel.png");
+        register.addActor(panellog);
+
+        newLoginField = new TextField("", Constants.getSkin());
+        register.addActor(newLoginField);
+        newLoginField.setX(Constants.START_SCREEN_WIDTH/4-100);
+        newLoginField.setY(Constants.START_SCREEN_HEIGHT-180);
+        newLoginField.setBounds(newLoginField.getX(), newLoginField.getY(), 300, 80);
+
+        newPasswordField = new TextField("", Constants.getSkin());
+        register.addActor(newPasswordField);
+        newPasswordField.setX(Constants.START_SCREEN_WIDTH/2+50);
+        newPasswordField.setY(Constants.START_SCREEN_HEIGHT-180);
+        newPasswordField.setBounds(newPasswordField.getX(), newPasswordField.getY(), 300, 80);
+        newPasswordField.setPasswordCharacter('*');
+        newPasswordField.setPasswordMode(true);
+
+        button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3, this, "Зарегистрироваться", "register");
+		register.addActor(button23);
+
+        GuiButton button233 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/7, this, "Отмена");
+        register.addActor(button233);
+        button233.setStage(login);
 
 		// !========================! Создаем главное меню !========================! \\
         Panel panel1 = new Panel(0, 0, "GUI/Panels/lib_panel.png");
@@ -164,7 +199,7 @@ public class MelonCycle extends Game {
 
 		// !========================================================================! \\
 
-		currentStage = main;
+		currentStage = login;
 		Gdx.input.setInputProcessor(currentStage);
 
         // !========================! Учим персонажа навыкам !========================! \\
