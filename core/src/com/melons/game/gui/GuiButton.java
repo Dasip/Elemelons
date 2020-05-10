@@ -7,11 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
 import com.melons.game.interfaces.SizeChangable;
 
-public class GuiButton extends Actor implements SizeChangable {
+public class GuiButton extends TextButton implements SizeChangable {
 
     protected Texture Image;
 
@@ -27,21 +28,21 @@ public class GuiButton extends Actor implements SizeChangable {
     protected MelonCycle game;
     Stage toChange;
 
-    public GuiButton(float x, float y, final MelonCycle g, String path){
+    public GuiButton(float x, float y, final MelonCycle g, String text){
+        super(text, Constants.getSkin());
         toChange = null;
         this.x = x;
         this.y = y;
         this.game = g;
-        Image = new Texture(path);
 
         default_x = x;
         default_y = y;
-        default_width = Image.getWidth();
-        default_height = Image.getWidth();
+        default_width = 200;
+        default_height = 90;
 
         setX(x);
         setY(y);
-        setBounds(x, y, Image.getWidth(), Image.getHeight());
+        setBounds(x, y, default_width, default_height);
 
         setTouchable(Touchable.enabled);
         addListener(new InputListener(){
@@ -74,10 +75,6 @@ public class GuiButton extends Actor implements SizeChangable {
         game.changeStage(toChange);
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.draw(Image, this.x, this.y);
-    }
 
     @Override
     public void resize(int nw, int nh) {

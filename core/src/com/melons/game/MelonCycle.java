@@ -5,6 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
 import com.melons.game.controllers.LibController;
@@ -13,6 +16,7 @@ import com.melons.game.gui.DescContainer;
 import com.melons.game.gui.EndTurnButton;
 import com.melons.game.gui.GuiButton;
 import com.melons.game.gui.HealthBar;
+import com.melons.game.gui.MyTextInput;
 import com.melons.game.gui.PageButton;
 import com.melons.game.gui.Panel;
 import com.melons.game.gui.RuneContainer;
@@ -24,11 +28,13 @@ import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
+
 public class MelonCycle extends Game {
 
 	private Stage main;
 	private Stage lib;
 	private Stage fight;
+	private Stage login;
 	private MelonMage player;
 	private MelonMage enemy;
 
@@ -41,6 +47,10 @@ public class MelonCycle extends Game {
 	private DescContainer desc;
 	private CurrentContainer curr;
 
+	private TextField loginField;
+	private TextField passwordField;
+
+
 	ArrayList<SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
 
 	@Override
@@ -49,8 +59,35 @@ public class MelonCycle extends Game {
 		main = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 		fight = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 		lib = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
+		login = new Stage(new StretchViewport(Constants.START_SCREEN_WIDTH, Constants.START_SCREEN_HEIGHT));
 
 		Minerva = new LibController(this);
+
+		// !========================! Создаем входное меню !========================! \\
+
+		Panel panellog = new Panel(0, 0, "GUI/Panels/lib_panel.png");
+		login.addActor(panellog);
+
+		loginField = new TextField("", Constants.getSkin());
+		login.addActor(loginField);
+		loginField.setX(Constants.START_SCREEN_WIDTH/4-100);
+		loginField.setY(Constants.START_SCREEN_HEIGHT-180);
+		loginField.setBounds(loginField.getX(), loginField.getY(), 300, 80);
+
+
+		passwordField = new TextField("", Constants.getSkin());
+		login.addActor(passwordField);
+		passwordField.setX(Constants.START_SCREEN_WIDTH/2+50);
+		passwordField.setY(Constants.START_SCREEN_HEIGHT-180);
+		passwordField.setBounds(passwordField.getX(), passwordField.getY(), 300, 80);
+		passwordField.setPasswordCharacter('*');
+		passwordField.setPasswordMode(true);
+
+        TextButton button23 = new TextButton("Click me", Constants.getSkin(), "default");
+        login.addActor(button23);
+        button23.setX(40);
+        button23.setY(40);
+
 
 		// !========================! Создаем главное меню !========================! \\
         Panel panel1 = new Panel(0, 0, "GUI/Panels/lib_panel.png");
@@ -66,13 +103,14 @@ public class MelonCycle extends Game {
 		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
 		main.addActor(custom);*/
 
-		GuiButton gui1 = new GuiButton(100, 400, this, "GUI/Buttons/fight_button.png");
+		GuiButton gui1 = new GuiButton(100, 400, this, "В бой");
 		main.addActor(gui1);
 		gui1.setStage(fight);
 
-		gui1 = new GuiButton(100, 200, this, "GUI/Buttons/lib_button.png");
+		gui1 = new GuiButton(100, 200, this, "Лавка");
 		main.addActor(gui1);
 		gui1.setStage(lib);
+
 
 		// !========================================================================! \\
 
@@ -84,7 +122,7 @@ public class MelonCycle extends Game {
 		Panel panel4 = new Panel(panel1.getWidth()+1, 0, "GUI/Panels/melon_panel.png");
 		lib.addActor(panel4);
 
-		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "GUI/Buttons/main_button.png");
+		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "Меню");
 		lib.addActor(gui2);
 		gui2.setStage(main);
 
@@ -167,7 +205,7 @@ public class MelonCycle extends Game {
 
 		Mars = createMars();
 
-		EndTurnButton end = new EndTurnButton(700, 410, this, "GUI/Buttons/turn_button.png", Mars);
+		EndTurnButton end = new EndTurnButton(700, 410, this, Mars);
 		currentStage.addActor(end);
 
 	    float x_step = 75;

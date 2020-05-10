@@ -7,8 +7,8 @@ public class EndTurnButton extends GuiButton{
 
     private FightController Mars;
 
-    public EndTurnButton(float x, float y, MelonCycle g, String path, FightController M) {
-        super(x, y, g, path);
+    public EndTurnButton(float x, float y, MelonCycle g, FightController M) {
+        super(x, y, g, "Ход");
         Mars = M;
     }
 
