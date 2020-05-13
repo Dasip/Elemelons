@@ -9,7 +9,7 @@ public class EquipButton extends GuiButton {
     protected DescContainer owner;
 
     public EquipButton(float x, float y, MelonCycle g, String skillName, DescContainer owner) {
-        super(x, y, g, "Взять");
+        super(x, y, g, "Взять", g.getLib());
         this.skillName = skillName;
         this.owner = owner;
     }

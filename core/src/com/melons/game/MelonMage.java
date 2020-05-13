@@ -21,6 +21,7 @@ public class MelonMage extends Actor implements SizeChangable {
 
     private Texture Image;
 
+    ArrayList<Skill> allBought = new ArrayList<>();
     ArrayList<Skill> skills = new ArrayList<>();
     ArrayList<SpellBuff> buffs = new ArrayList<>();
     ArrayList<SpellBuff> binBuffs = new ArrayList<>();
@@ -46,6 +47,7 @@ public class MelonMage extends Actor implements SizeChangable {
 
     com.melons.game.controllers.FightController Mars;
 
+    private int seedCurrency = 0;
     int hp = 100;
     int max_hp = 100;
     HealthBar hpBar;
@@ -117,6 +119,15 @@ public class MelonMage extends Actor implements SizeChangable {
 
     public boolean isSkillLearnt(String name){
         for (Skill i: skills){
+            if (i.getTextureName() == name){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isSkillBought(String name){
+        for (Skill i: allBought){
             if (i.getTextureName() == name){
                 return true;
             }
@@ -326,6 +337,18 @@ public class MelonMage extends Actor implements SizeChangable {
                 addBuff(i);
             }
         }
+    }
+
+    public int getSeedCurrency() {
+        return seedCurrency;
+    }
+
+    public void setSeedCurrency(int seedCurrency) {
+        this.seedCurrency = seedCurrency;
+    }
+
+    public void buy(Skill s){
+        allBought.add(s);
     }
 
 }

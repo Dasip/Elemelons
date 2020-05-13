@@ -25,15 +25,14 @@ public class Constants {
     public static final String CURSE = "curse";
     public static final String BLESS = "bless";
 
+    public static final String BASE_URL = "http://195.19.44.146:89/";
+    public static final String API_KEY = "2295262834A821A2FD76A6B3C6495E02";
+
     public static final String ELECTRIC = "electric";
     public static final String FIRE = "fire";
     public static final String WATER = "water";
     public static final String EARTH = "earth";
     public static final String AIR = "air";
-
-
-    public static final String Username = "Dasip";
-    public static final String password = "qwerty";
 
 
     public static ArrayList<Skill> GET_SKILLS(){

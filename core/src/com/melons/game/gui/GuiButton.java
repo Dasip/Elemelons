@@ -7,14 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
 import com.melons.game.interfaces.SizeChangable;
 
-public class GuiButton extends TextButton implements SizeChangable {
+public class GuiButton extends Actor implements SizeChangable {
 
     protected Texture Image;
+    protected Label label;
+
+    protected float def_label_x;
+    protected float def_label_y;
 
     protected float default_x;
     protected float default_y;
@@ -28,8 +32,7 @@ public class GuiButton extends TextButton implements SizeChangable {
     protected MelonCycle game;
     Stage toChange;
 
-    public GuiButton(float x, float y, final MelonCycle g, String text){
-        super(text, Constants.getSkin());
+    public GuiButton(float x, float y, final MelonCycle g, String text, Stage owner){
         toChange = null;
         this.x = x;
         this.y = y;
@@ -39,6 +42,12 @@ public class GuiButton extends TextButton implements SizeChangable {
         default_y = y;
         default_width = 200;
         default_height = 90;
+
+        label = new Label(text, Constants.getSkin());
+        owner.addActor(label);
+
+        def_label_x = x + 10;
+        def_label_y = y + 10;
 
         setX(x);
         setY(y);
@@ -78,11 +87,19 @@ public class GuiButton extends TextButton implements SizeChangable {
 
     @Override
     public void resize(int nw, int nh) {
+        label.setX(def_label_x);
+        label.setY(def_label_y);
+
         float bx = default_x / Constants.START_SCREEN_WIDTH * nw;
         float by = default_y / Constants.START_SCREEN_HEIGHT * nh;
         float width = default_width / Constants.START_SCREEN_WIDTH * nw;
         float height = default_height / Constants.START_SCREEN_HEIGHT * nh;
         setBounds(bx, by, width, height);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
     }
 }
 

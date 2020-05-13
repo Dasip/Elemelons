@@ -87,14 +87,15 @@ public class MelonCycle extends Game {
 		passwordField.setPasswordCharacter('*');
 		passwordField.setPasswordMode(true);
 
-		EnterButton button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3+40, this, "Войти", "login");
+		EnterButton button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3+40, this, "Войти", "login", login);
         login.addActor(button23);
+        button23.setFields(loginField, passwordField);
 
-        GuiButton butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/5, this, "Новый аккаунт");
+        GuiButton butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/5, this, "Новый аккаунт", login);
         login.addActor(butt333);
         butt333.setStage(register);
 
-		butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/40, this, "В игру");
+		butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/40, this, "В игру", login);
 		login.addActor(butt333);
 		butt333.setStage(main);
 
@@ -117,10 +118,10 @@ public class MelonCycle extends Game {
         newPasswordField.setPasswordCharacter('*');
         newPasswordField.setPasswordMode(true);
 
-        button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3, this, "Зарегистрироваться", "register");
+        button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3, this, "Зарегистрироваться", "register", register);
 		register.addActor(button23);
 
-        GuiButton button233 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/7, this, "Отмена");
+        GuiButton button233 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/7, this, "Отмена", register);
         register.addActor(button233);
         button233.setStage(login);
 
@@ -138,11 +139,11 @@ public class MelonCycle extends Game {
 		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
 		main.addActor(custom);*/
 
-		GuiButton gui1 = new GuiButton(100, 400, this, "В бой");
+		GuiButton gui1 = new GuiButton(100, 400, this, "В бой", main);
 		main.addActor(gui1);
 		gui1.setStage(fight);
 
-		gui1 = new GuiButton(100, 200, this, "Лавка");
+		gui1 = new GuiButton(100, 200, this, "Лавка", main);
 		main.addActor(gui1);
 		gui1.setStage(lib);
 
@@ -157,7 +158,7 @@ public class MelonCycle extends Game {
 		Panel panel4 = new Panel(panel1.getWidth()+1, 0, "GUI/Panels/melon_panel.png");
 		lib.addActor(panel4);
 
-		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "Меню");
+		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "Меню", lib);
 		lib.addActor(gui2);
 		gui2.setStage(main);
 
@@ -214,6 +215,14 @@ public class MelonCycle extends Game {
 	public void render(){
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		currentStage.draw();
+	}
+
+	public Stage getLib() {
+		return lib;
+	}
+
+	public Stage getFight() {
+		return fight;
 	}
 
 	public void organizeFight(){

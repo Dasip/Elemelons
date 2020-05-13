@@ -9,7 +9,7 @@ public class DequipButton extends GuiButton {
     protected DescContainer owner;
 
     public DequipButton(float x, float y, MelonCycle g, String skillName, DescContainer owner) {
-        super(x, y, g, "Убрать");
+        super(x, y, g, "Убрать", g.getLib());
         this.skillName = skillName;
         this.owner = owner;
     }

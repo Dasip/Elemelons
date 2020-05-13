@@ -121,7 +121,7 @@ public class FightController {
 
         field.addActor(message_window);
 
-        GuiButton ok = new GuiButton(Constants.START_SCREEN_WIDTH / 2 - win.getWidth() / 3, Constants.START_SCREEN_HEIGHT / 2 - win.getHeight() / 3, game, "Ок");
+        GuiButton ok = new GuiButton(Constants.START_SCREEN_WIDTH / 2 - win.getWidth() / 3, Constants.START_SCREEN_HEIGHT / 2 - win.getHeight() / 3, game, "Ок", field);
 
         field.addActor(ok);
         ok.setStage(game.getMain());
