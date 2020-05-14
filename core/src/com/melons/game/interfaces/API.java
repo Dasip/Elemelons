@@ -1,6 +1,7 @@
 package com.melons.game.interfaces;
 
-import com.melons.game.models.TokenGetter;
+import com.melons.game.models.TokenData;
+import com.melons.game.models.ServerTokenResponse;
 
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ public interface API {
 
     @FormUrlEncoded
     @POST("api/user/request_token")
-    Call<TokenGetter> request_token(@Header("X-API-KEY") String api_key,
-                                    @FieldMap HashMap<String, String> map);
+    Call<ServerTokenResponse<TokenData>> request_token(@Header("X-API-KEY") String api_key,
+                                                       @FieldMap HashMap<String, String> map);
 
 }
