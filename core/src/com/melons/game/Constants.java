@@ -3,9 +3,15 @@ package com.melons.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.melons.game.interfaces.API;
+import com.melons.game.models.Melongame;
+import com.melons.game.models.PostData;
 import com.melons.game.models.TokenData;
 import com.melons.game.models.ServerTokenResponse;
+import com.melons.game.models.UserData;
+import com.melons.game.models.UserResponse;
 import com.melons.game.skills.ElectricField;
 import com.melons.game.skills.Fireball;
 import com.melons.game.skills.FlameWave;
@@ -13,13 +19,17 @@ import com.melons.game.skills.Lightning;
 import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
+import jdk.nashorn.api.scripting.JSObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class Constants {
@@ -40,6 +50,14 @@ public class Constants {
 
     public static final String ADMIN_NAME = "dima@dima.com";
     public static final String ADMIN_PASS = "123456";
+
+    public static boolean logged = false;
+    public static String username = "";
+    public static String id = "";
+    public static String seedCurrency = "";
+    public static ArrayList<Skill> skillbuild = new ArrayList<>();
+    public static String skillshidden = new String();
+    public static boolean skillsToChange = false;
 
     // !===================! Переменные механик игры !===================! \\
 
@@ -67,7 +85,7 @@ public class Constants {
 
     public static Skill GET_SKILL_BY_NAME(String name){
         for (Skill i: GET_SKILLS()){
-            if (i.getTextureName() == name) {
+            if (i.getTextureName().equals(name)) {
                 return i;
             }
         }
@@ -79,6 +97,11 @@ public class Constants {
         return SKIN;
     }
 
+
+
+
+
+
     public static Retrofit GET_RETROFIT(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -86,6 +109,9 @@ public class Constants {
                 .build();
         return retrofit;
     }
+
+
+
 
     public static String GET_TOKEN(){
         Retrofit retrofit = GET_RETROFIT();
@@ -116,4 +142,101 @@ public class Constants {
         return TOKEN;
     }
 
+    public static String GET_API_KEY(){
+        return API_KEY;
+    }
+
+    public static void SET_SKILLBUILD(String fullBuild){
+        String[] words = fullBuild.split("\\s");
+        for (String i: words){
+            Skill skill = GET_SKILL_BY_NAME(i);
+            skillbuild.add(skill);
+        }
+    }
+
+    public static void LOG_IN(UserData data, final MelonCycle game){
+        logged = true;
+        username = data.getUsername();
+
+        Retrofit retrofit = GET_RETROFIT();
+        API api = retrofit.create(API.class);
+
+        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), Constants.username, "nickname");
+
+        melonCall.enqueue(new Callback<UserResponse<UserData>>() {
+            @Override
+            public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
+                if (response.code() == 200){
+                    Melongame melon = response.body().getData().getMelongame().get(0);
+                    id = melon.getId();
+                    skillshidden = melon.getSkillbuild();
+                    seedCurrency = melon.getSeedcurrency();
+                    skillsToChange = true;
+                    System.out.println("GOOD");
+                }
+                else{
+                    System.out.println(response.raw());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse<UserData>> call, Throwable t) {
+                System.out.println(t);
+            }
+        });
+
+    }
+
+    public static void UP_TO_DATE_SKILLS(ArrayList<Skill> skills){
+        String names = "";
+        for (Skill i: skills){
+            if (i == skills.get(skills.size()-1)) {
+                names += i.getTextureName();
+            }
+            else{
+                names += i.getTextureName() + " ";
+            }
+        }
+        skillshidden = names;
+        SET_SKILLBUILD(skillshidden);
+        UPDATE_DB();
+    }
+
+    public static void UPDATE_DB() {
+
+        Retrofit retrofit = GET_RETROFIT();
+        API api = retrofit.create(API.class);
+
+        HashMap<String, String> data = new HashMap<>();
+
+        data.put("_id", id);
+        data.put("nickname", username);
+        data.put("skillbuild", skillshidden);
+        data.put("skillbought",skillshidden);
+        data.put("seedcurrency", seedCurrency);
+
+        System.out.println(data);
+
+        Call<PostData> updateResponse = api.update_melon(GET_API_KEY(), data);
+
+        updateResponse.enqueue(new Callback<PostData>() {
+            @Override
+            public void onResponse(Call<PostData> call, Response<PostData> response) {
+                if (response.code() == 200){
+                    System.out.println("VSE GOOD");
+                }
+                else{
+                    System.out.println(response.raw());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostData> call, Throwable t) {
+                System.out.println(123);
+                System.out.println(t);
+            }
+        });
+    }
+
 }
+

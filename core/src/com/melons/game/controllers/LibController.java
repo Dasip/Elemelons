@@ -32,7 +32,8 @@ public class LibController {
     public void updateCurrent(){
         ArrayList<RuneButton> runes = game.getPlayerRunes();
         if (runes.size() < Constants.MAX_SKILLS){
-            for (int i=0; i < Constants.MAX_SKILLS - runes.size(); i++){
+            int sizeN = Constants.MAX_SKILLS - runes.size();
+            for (int i=0; i < sizeN; i++){
                 RuneButton r = new RuneButton(0, 0, game, new Skill(game));
                 runes.add(r);
             }

@@ -49,6 +49,9 @@ public class GuiButton extends Actor implements SizeChangable {
         def_label_x = x + 10;
         def_label_y = y + 10;
 
+        label.setX(def_label_x);
+        label.setY(def_label_y);
+
         setX(x);
         setY(y);
         setBounds(x, y, default_width, default_height);
@@ -100,6 +103,12 @@ public class GuiButton extends Actor implements SizeChangable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    public boolean remove() {
+        label.remove();
+        return super.remove();
     }
 }
 

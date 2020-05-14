@@ -89,6 +89,7 @@ public class MelonCycle extends Game {
 
 		EnterButton button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3+40, this, "Войти", "login", login);
         login.addActor(button23);
+        button23.setStage(main);
         button23.setFields(loginField, passwordField);
 
         GuiButton butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/5, this, "Новый аккаунт", login);
@@ -204,17 +205,29 @@ public class MelonCycle extends Game {
 		Gdx.input.setInputProcessor(currentStage);
 
         // !========================! Учим персонажа навыкам !========================! \\
-        player.addSkill(new Fireball(this));
-        player.addSkill(new Lightning(this));
+
+        //player.addSkill(new Fireball(this));
+        //player.addSkill(new Lightning(this));
         //player.addSkill(new FlameWave(this));
         //player.addSkill(new ElectricField(this));
         // !========================================================================! \\
+	}
+
+	public void updatePlayerSkills(){
+		Constants.SET_SKILLBUILD(Constants.skillshidden);
+		for (Skill i: Constants.skillbuild){
+			player.preloadSkill(i);
+		}
 	}
 
 	@Override
 	public void render(){
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		currentStage.draw();
+		if (Constants.skillsToChange){
+			updatePlayerSkills();
+			Constants.skillsToChange = false;
+		}
 	}
 
 	public Stage getLib() {
@@ -267,7 +280,6 @@ public class MelonCycle extends Game {
     }
 
     public void openLib(){
-	    desc.setRune(null);
 	    Minerva.updateCurrent();
 
 	}

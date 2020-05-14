@@ -95,12 +95,20 @@ public class MelonMage extends Actor implements SizeChangable {
 
     public Texture getImage(){ return Image; }
 
-    public boolean addSkill(Skill s){
+    public boolean preloadSkill(Skill s){
         if (skills.size() < Constants.MAX_SKILLS) {
             skills.add(s);
             return true;
         }
         return false;
+    }
+
+    public boolean addSkill(Skill s){
+        boolean reaction = preloadSkill(s);
+        if (reaction){
+            Constants.UP_TO_DATE_SKILLS(getSkills());
+        }
+        return reaction;
     }
 
     public ArrayList<Skill> getSkills(){
