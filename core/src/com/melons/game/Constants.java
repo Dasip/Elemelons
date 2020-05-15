@@ -55,6 +55,7 @@ public class Constants {
 
     public static boolean logged = false;
     public static boolean started = false;
+    public static MelonData currentUser = new MelonData();
     public static String username = "";
     public static String id = "1";
     public static String seedCurrency = "100";
@@ -154,6 +155,8 @@ public class Constants {
             Skill skill = GET_SKILL_BY_NAME(i);
             skillbuild.add(skill);
         }
+        currentUser.setSkillbought(fullBuild);
+        currentUser.setSkillbuild(fullBuild);
     }
 
 
@@ -206,9 +209,13 @@ public class Constants {
             public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
                 if (response.code() == 200){
                     Melongame melon = response.body().getData().getMelongame().get(0);
-                    id = melon.getId();
-                    skillshidden = melon.getSkillbuild();
-                    seedCurrency = melon.getSeedcurrency();
+                    currentUser = new MelonData();
+                    currentUser.setId(melon.getId());
+                    currentUser.setNickname(melon.getNickname());
+                    currentUser.setSkillbuild(melon.getSkillbuild());
+                    currentUser.setSkillbought(melon.getSkillbought());
+                    currentUser.setSeedcurrency(melon.getSeedcurrency());
+
                     skillsToChange = true;
                     System.out.println("MELON IN");
                 }
@@ -249,11 +256,11 @@ public class Constants {
         API api = retrofit.create(API.class);
 
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("_id", "1");
-        data.put("nickname", "MrD");
+        data.put("_id", currentUser.getId());
+        data.put("nickname", currentUser.getNickname());
         data.put("skillbuild", skillshidden);
         data.put("skillbought", skillshidden);
-        data.put("seedcurrency", "100");
+        data.put("seedcurrency", currentUser.getSeedcurrency());
 
         Call<UserResponse<PostData>> request = api.update_melon(API_KEY, ADMIN_TOKEN, data);
         request.enqueue(new Callback<UserResponse<PostData>>() {
@@ -348,6 +355,19 @@ public class Constants {
         });
     }
 
+    public static MelonData GET_USER(){
+        return currentUser;
+    }
+
+    public static ArrayList<Skill> GENERATE_SKILL_PACK(String build){
+        String[] words = build.split("\\s");
+        ArrayList<Skill> skills = new ArrayList<>();
+        for (String i: words){
+            Skill j = GET_SKILL_BY_NAME(i);
+            skills.add(j);
+        }
+        return skills;
+    }
 
 }
 

@@ -96,7 +96,9 @@ public class MelonMage extends Actor implements SizeChangable {
     public Texture getImage(){ return Image; }
 
     public boolean preloadSkill(Skill s){
+        System.out.println("Preloading");
         if (skills.size() < Constants.MAX_SKILLS) {
+            System.out.println(s.getTextureName());
             skills.add(s);
             return true;
         }
@@ -119,6 +121,7 @@ public class MelonMage extends Actor implements SizeChangable {
         for (Skill i: skills){
             if (i.getTextureName() == name){
                 skills.remove(i);
+                Constants.UP_TO_DATE_SKILLS(getSkills());
                 return true;
             }
         }

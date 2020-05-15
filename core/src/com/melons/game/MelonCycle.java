@@ -218,9 +218,9 @@ public class MelonCycle extends Game {
 	}
 
 	public void updatePlayerSkills(){
-		Constants.SET_SKILLBUILD(Constants.skillshidden);
-		for (Skill i: Constants.skillbuild){
+		for (Skill i: Constants.GENERATE_SKILL_PACK(Constants.GET_USER().getSkillbuild())){
 			player.preloadSkill(i);
+			Minerva.updateCurrent();
 		}
 	}
 
