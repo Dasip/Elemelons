@@ -51,8 +51,9 @@ public class MelonCycle extends Game {
 	private MelonTextField loginField;
 	private MelonTextField passwordField;
 
-	private TextField newLoginField;
-	private TextField newPasswordField;
+	private MelonTextField newLoginField;
+	private MelonTextField newPasswordField;
+	private MelonTextField newEmail;
 
 
 	ArrayList<SizeChangable> toResize = new ArrayList<com.melons.game.interfaces.SizeChangable>();
@@ -103,24 +104,29 @@ public class MelonCycle extends Game {
         panellog = new Panel(0, 0, "GUI/Panels/lib_panel.png");
         register.addActor(panellog);
 
-        newLoginField = new TextField("", Constants.getSkin());
+        newLoginField = new MelonTextField("", Constants.getSkin(),"Nickname", register, this);
         register.addActor(newLoginField);
-        newLoginField.setX(Constants.START_SCREEN_WIDTH/4-100);
-        newLoginField.setY(Constants.START_SCREEN_HEIGHT-180);
-        newLoginField.setBounds(newLoginField.getX(), newLoginField.getY(), 300, 80);
+        newLoginField.setMelonSize(Constants.START_SCREEN_WIDTH/4-100, Constants.START_SCREEN_HEIGHT-300,
+				250, 60);
 
-        newPasswordField = new TextField("", Constants.getSkin());
+        newPasswordField = new MelonTextField("", Constants.getSkin(),"Password", register, this);
         register.addActor(newPasswordField);
-        newPasswordField.setX(Constants.START_SCREEN_WIDTH/2+50);
-        newPasswordField.setY(Constants.START_SCREEN_HEIGHT-180);
-        newPasswordField.setBounds(newPasswordField.getX(), newPasswordField.getY(), 300, 80);
+        newPasswordField.setMelonSize(Constants.START_SCREEN_WIDTH/2+50, Constants.START_SCREEN_HEIGHT-180,
+				250, 60);
         newPasswordField.setPasswordCharacter('*');
         newPasswordField.setPasswordMode(true);
 
-        button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/3, this, "Зарегистрироваться", "register", register);
-		register.addActor(button23);
+        newEmail = new MelonTextField("", Constants.getSkin(), "Email", register, this);
+        register.addActor(newEmail);
+        newEmail.setMelonSize(Constants.START_SCREEN_WIDTH/4-100, Constants.START_SCREEN_HEIGHT-180,
+				250, 60);
 
-        GuiButton button233 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/7, this, "Отмена", register);
+        button23 = new EnterButton(Constants.START_SCREEN_WIDTH/4+25, Constants.START_SCREEN_HEIGHT/3-30, this, "Зарегистрироваться", "register", register);
+		register.addActor(button23);
+		button23.setFields(newLoginField, newPasswordField, newEmail);
+		button23.setStage(main);
+
+        GuiButton button233 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/7-30, this, "Отмена", register);
         register.addActor(button233);
         button233.setStage(login);
 

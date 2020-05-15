@@ -36,16 +36,31 @@ public interface API {
 
 
     @FormUrlEncoded
+    @POST("api/melongame/add")
+    Call<UserResponse<UserData>> add_melon(@Header("X-API-KEY") String api_key,
+                                           @Header("X-TOKEN") String token,
+                                           @FieldMap HashMap<String, String> map);
+
+
+    @FormUrlEncoded
     @POST("api/melongame/update")
     Call<UserResponse<PostData>> update_melon(@Header("X-API-KEY") String api_key,
                                               @Header("X-TOKEN") String token,
                                               @FieldMap HashMap<String, String> map);
 
 
+    @FormUrlEncoded
+    @POST("api/user/add")
+    Call<UserResponse<PostData>> register_user(@Header("X-API-KEY") String api_key,
+                                               @Header("X-TOKEN") String admin_token,
+                                               @FieldMap HashMap<String, String> map);
+
 
     @GET("api/melongame/all")
     Call<UserResponse<UserData>> get_melon(@Header("X-API-KEY") String api_key,
                                            @Header("X-TOKEN") String token,
                                            @Query("filter") String nick, @Query("field") String nickname);
+
+
 
 }

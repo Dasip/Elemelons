@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.melons.game.gui.buttons.EnterButton;
 import com.melons.game.interfaces.API;
 import com.melons.game.models.MelonData;
 import com.melons.game.models.Melongame;
@@ -48,8 +49,7 @@ public class Constants {
     public static final String API_KEY = "2295262834A821A2FD76A6B3C6495E02";
     public static final String UserToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNjEifSwiaWF0IjoxNTg5NTM0NjQ1LCJleHAiOjE1ODk2MjEwNDV9.fOrxMjaw5_DPMrIBSPxklOCmj32zTz2voDqoaFCcVdI";
 
-    public static String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNTgifSwiaWF0IjoxNTg5NTM0ODQ3LCJleHAiOjE1ODk2MjEyNDd9.h12A-0MLGw7uVtP_QU2Nj315vtAjgsrZ1VyLaWb4Kyc";
-
+    public static String ADMIN_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNTgifSwiaWF0IjoxNTg5NTQ3MjE3LCJleHAiOjE1ODk2MzM2MTd9.fs7F1Duy4r2VUH1NxJ2po7mDL_rG0A69_PNMbkk1okg";
     public static final String ADMIN_NAME = "dima@dima.com";
     public static final String ADMIN_PASS = "123456";
 
@@ -130,7 +130,7 @@ public class Constants {
             public void onResponse(Call<ServerTokenResponse<TokenData>> call, Response<ServerTokenResponse<TokenData>> response) {
                 if (response.code() == 200){
                     ServerTokenResponse<TokenData> tokenData = response.body();
-                    TOKEN = tokenData.getTokenData().getToken();
+                    ADMIN_TOKEN = tokenData.getTokenData().getToken();
                 }
             }
 
@@ -141,7 +141,7 @@ public class Constants {
         }
         );
 
-        return TOKEN;
+        return ADMIN_TOKEN;
     }
 
     public static String GET_API_KEY(){
@@ -156,14 +156,50 @@ public class Constants {
         }
     }
 
-    public static void LOG_IN(UserData data, final MelonCycle game){
+
+    public static void LOG_IN(HashMap<String, String> data){
+
+        Retrofit retrofit = GET_RETROFIT();
+        API api = retrofit.create(API.class);
+
+        Call<UserResponse<UserData>> userCall = api.login(Constants.GET_API_KEY(), data);
+
+        userCall.enqueue(new Callback<UserResponse<UserData>>() {
+            @Override
+            public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
+                if (response.code() == 200){
+                    UserResponse<UserData> userResponse = response.body();
+
+                    System.out.println("LOGGED IN");
+                    System.out.println(userResponse.getData().getUsername());
+
+                    Constants.MELON_IN(userResponse.getData());
+
+                }
+                else{
+                    System.out.println("NOT LOGGED IN");
+                    System.out.println(response.raw());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse<UserData>> call, Throwable t) {
+                System.out.println("BROKEN WHILE LOGGIN IN");
+            }
+        });
+
+    }
+
+
+
+    public static void MELON_IN(UserData data){
         logged = true;
         username = data.getUsername();
 
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
-        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), TOKEN, Constants.username, "nickname");
+        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), ADMIN_TOKEN, Constants.username, "nickname");
 
         melonCall.enqueue(new Callback<UserResponse<UserData>>() {
             @Override
@@ -174,16 +210,19 @@ public class Constants {
                     skillshidden = melon.getSkillbuild();
                     seedCurrency = melon.getSeedcurrency();
                     skillsToChange = true;
-                    System.out.println("GOOD");
+                    System.out.println("MELON IN");
                 }
                 else{
+                    System.out.println("MELON NOT IN");
                     System.out.println(response.raw());
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse<UserData>> call, Throwable t) {
+                System.out.println("BROKEN WHILE MELON IN");
                 System.out.println(t);
+
             }
         });
 
@@ -216,24 +255,97 @@ public class Constants {
         data.put("skillbought", skillshidden);
         data.put("seedcurrency", "100");
 
-        Call<UserResponse<PostData>> request = api.update_melon(API_KEY, TOKEN, data);
+        Call<UserResponse<PostData>> request = api.update_melon(API_KEY, ADMIN_TOKEN, data);
         request.enqueue(new Callback<UserResponse<PostData>>() {
             @Override
             public void onResponse(Call<UserResponse<PostData>> call, Response<UserResponse<PostData>> response) {
                 if (response.code() == 200){
-                    System.out.println("GOOD");
+                    System.out.println("UPLOADED");
                 }
                 else{
-                    System.out.println("BAD");
+                    System.out.println("NOT UPLOADED");
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse<PostData>> call, Throwable t) {
+                System.out.println();
                 System.out.println(t);
             }
         });
 
+    }
+
+    public static void REGISTER(final HashMap<String, String> data){
+
+        Retrofit retrofit = Constants.GET_RETROFIT();
+        API api = retrofit.create(API.class);
+
+        Call<UserResponse<PostData>> registerResp = api.register_user(Constants.API_KEY, Constants.ADMIN_TOKEN, data);
+        registerResp.enqueue(new Callback<UserResponse<PostData>>() {
+            @Override
+            public void onResponse(Call<UserResponse<PostData>> call, Response<UserResponse<PostData>> response) {
+                if (response.code() == 200){
+                    System.out.println("REGISTERED!");
+
+                    HashMap<String, String> data0 = new HashMap<>();
+                    data0.put("username", data.get("username"));
+                    data0.put("password", data.get("password"));
+                    Constants.CREATE_MELON(data);
+
+                }
+                else{
+                    System.out.println("NOT REGISTERED");
+                    System.out.println(response.raw());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse<PostData>> call, Throwable t) {
+                System.out.println("BROKEN ON REGISTERING");
+                System.out.println(t);
+            }
+        });
+
+    }
+
+
+    public static void CREATE_MELON(final HashMap<String, String> data0){
+        Retrofit retrofit = GET_RETROFIT();
+        API api = retrofit.create(API.class);
+
+        HashMap<String, String> data2 = new HashMap<>();
+        data2.put("nickname", data0.get("username"));
+        data2.put("skillbuild", "Fireball");
+        data2.put("skillbought", "Fireball");
+        data2.put("seedcurrency", "100");
+
+
+
+        Call<UserResponse<UserData>> melonResp = api.add_melon(API_KEY, ADMIN_TOKEN, data2);
+        melonResp.enqueue(new Callback<UserResponse<UserData>>() {
+            @Override
+            public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
+                if (response.code() == 200){
+
+                    HashMap<String, String> dataLog = new HashMap<>();
+                    dataLog.put("username", data0.get("email"));
+                    dataLog.put("password", data0.get("password"));
+
+                    System.out.println("CREATED MELON");
+                    LOG_IN(dataLog);
+                }
+                else{
+                    System.out.println("NOT CREATED MELON");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse<UserData>> call, Throwable t) {
+                System.out.println("BROKEN ON CREATING MELON");
+                System.out.println(t);
+            }
+        });
     }
 
 
