@@ -1,9 +1,11 @@
-package com.melons.game.gui;
+package com.melons.game.gui.buttons;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
+import com.melons.game.gui.buttons.GuiButton;
 import com.melons.game.interfaces.API;
 import com.melons.game.models.UserData;
 import com.melons.game.models.UserResponse;
@@ -45,6 +47,8 @@ public class EnterButton extends GuiButton {
             user.put("password", password.getText());
 
             Call<UserResponse<UserData>> userCall = api.login(Constants.GET_API_KEY(), user);
+            System.out.println(userCall.request().body());
+
             userCall.enqueue(new Callback<UserResponse<UserData>>() {
                 @Override
                 public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
@@ -57,6 +61,7 @@ public class EnterButton extends GuiButton {
 
                     }
                     else{
+                        System.out.println("pizdec");
                         System.out.println(response.raw());
                     }
                 }
@@ -67,10 +72,18 @@ public class EnterButton extends GuiButton {
                 }
             });
 
-            game.changeStage(toChange);
 
             }
         }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (Constants.logged && !Constants.started){
+            game.changeStage(toChange);
+            Constants.started = true;
+        }
     }
+}
 
 

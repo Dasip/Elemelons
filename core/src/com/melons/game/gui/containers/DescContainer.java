@@ -1,28 +1,22 @@
-package com.melons.game.gui;
+package com.melons.game.gui.containers;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
-import com.melons.game.RuneButton;
+import com.melons.game.gui.buttons.RuneButton;
+import com.melons.game.gui.buttons.DequipButton;
+import com.melons.game.gui.buttons.EquipButton;
 
-public class DescContainer extends Panel {
+public class DescContainer extends MelonContainer {
 
     protected RuneButton rune;
-    protected float width;
-    protected float height;
-    protected MelonCycle game;
-    protected Stage owner;
 
     protected EquipButton set;  // кнопка выучивания навыка
     protected DequipButton unset;  // кнопка снятия навыка
 
     public DescContainer(float x, float y, float width, float height, Stage owner, MelonCycle g) {
-        super(x, y, "null");
-        this.height = height;
-        this.width = width;
-        game = g;
-        this.owner = owner;
+        super(x, y, width, height, owner, g);
         set = null;
         unset = null;
     }
@@ -39,7 +33,7 @@ public class DescContainer extends Panel {
     }
 
     public void setRune(RuneButton r){
-        rune = r;
+        rune = r.copy();
         if (rune != null) {
             if (!game.getPlayer().isSkillLearnt(rune.getRuneName())) {
                 showSet();
@@ -70,6 +64,7 @@ public class DescContainer extends Panel {
         }
 
         if (rune != null){
+            rune.setCoords(x+75, height-110);
             batch.draw(rune.getImage(), x+75, height-110);
             String text = rune.getDesc();
             Constants.MELON_FONT.draw(batch, text, x, height-140);

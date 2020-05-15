@@ -1,4 +1,4 @@
-package com.melons.game.gui;
+package com.melons.game.gui.buttons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -97,7 +97,7 @@ public class GuiButton extends Actor implements SizeChangable {
         float by = default_y / Constants.START_SCREEN_HEIGHT * nh;
         float width = default_width / Constants.START_SCREEN_WIDTH * nw;
         float height = default_height / Constants.START_SCREEN_HEIGHT * nh;
-        setBounds(bx, by, width, height);
+        setBounds(default_x, default_y, width, height);
     }
 
     @Override

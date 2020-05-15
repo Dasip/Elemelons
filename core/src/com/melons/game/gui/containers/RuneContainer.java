@@ -1,34 +1,25 @@
-package com.melons.game.gui;
+package com.melons.game.gui.containers;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
-import com.melons.game.RuneButton;
+import com.melons.game.gui.buttons.RuneButton;
 import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
 
 
-public class RuneContainer extends Panel {
+public class RuneContainer extends MelonContainer {
 
     protected ArrayList<RuneButton> runes = new ArrayList<>();
     protected int runeIndex = 0;
     protected int runeVolume = 16;
     protected int page = 1;
-    protected Stage owner;
 
-    protected float width;
-    protected float height;
-
-    protected MelonCycle game;
 
     public RuneContainer(float x, float y, float w, float h, Stage owner, MelonCycle g){
-        super(x, y, "null");
-        width = w;
-        height = h;
-        this.owner = owner;
-        game = g;
+        super(x, y, w, h, owner, g);
+
     }
 
 
@@ -86,8 +77,7 @@ public class RuneContainer extends Panel {
                 int row = (i - runeVolume*(page-1)) / 4;
                 RuneButton cur = runes.get(i);
                 owner.addActor(cur);
-                cur.setX(x + (col * xStep) + xSep);
-                cur.setY(height - (row * yStep) - ySep);
+                cur.setCoords(x + (col * xStep) + xSep, height - (row * yStep) - ySep);
             }
 
             runeIndex = curIndex;
@@ -95,4 +85,5 @@ public class RuneContainer extends Panel {
 
         }
     }
+
 }

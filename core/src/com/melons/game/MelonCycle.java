@@ -9,18 +9,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
 import com.melons.game.controllers.LibController;
-import com.melons.game.gui.CurrentContainer;
-import com.melons.game.gui.DescContainer;
-import com.melons.game.gui.EndTurnButton;
-import com.melons.game.gui.EnterButton;
-import com.melons.game.gui.GuiButton;
+import com.melons.game.gui.MelonTextField;
+import com.melons.game.gui.buttons.RuneButton;
+import com.melons.game.gui.containers.CurrentContainer;
+import com.melons.game.gui.containers.DescContainer;
+import com.melons.game.gui.buttons.EndTurnButton;
+import com.melons.game.gui.buttons.EnterButton;
+import com.melons.game.gui.buttons.GuiButton;
 import com.melons.game.gui.HealthBar;
-import com.melons.game.gui.PageButton;
-import com.melons.game.gui.Panel;
-import com.melons.game.gui.RuneContainer;
+import com.melons.game.gui.buttons.PageButton;
+import com.melons.game.gui.containers.Panel;
+import com.melons.game.gui.containers.RuneContainer;
 import com.melons.game.interfaces.SizeChangable;
-import com.melons.game.skills.Fireball;
-import com.melons.game.skills.Lightning;
 import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class MelonCycle extends Game {
 	private DescContainer desc;
 	private CurrentContainer curr;
 
-	private TextField loginField;
-	private TextField passwordField;
+	private MelonTextField loginField;
+	private MelonTextField passwordField;
 
 	private TextField newLoginField;
 	private TextField newPasswordField;
@@ -73,17 +73,15 @@ public class MelonCycle extends Game {
 		Panel panellog = new Panel(0, 0, "GUI/Panels/lib_panel.png");
 		login.addActor(panellog);
 
-		loginField = new TextField("", Constants.getSkin());
+		loginField = new MelonTextField("", Constants.getSkin(), "Email", login, this);
 		login.addActor(loginField);
-		loginField.setX(Constants.START_SCREEN_WIDTH/4-100);
-		loginField.setY(Constants.START_SCREEN_HEIGHT-180);
-		loginField.setBounds(loginField.getX(), loginField.getY(), 300, 80);
+		loginField.setMelonSize(Constants.START_SCREEN_WIDTH/4-100, Constants.START_SCREEN_HEIGHT-180,
+				250, 60);
 
-		passwordField = new TextField("", Constants.getSkin());
+		passwordField = new MelonTextField("", Constants.getSkin(), "Password", login, this);
 		login.addActor(passwordField);
-		passwordField.setX(Constants.START_SCREEN_WIDTH/2+50);
-		passwordField.setY(Constants.START_SCREEN_HEIGHT-180);
-		passwordField.setBounds(passwordField.getX(), passwordField.getY(), 300, 80);
+		passwordField.setMelonSize(Constants.START_SCREEN_WIDTH/2+50, Constants.START_SCREEN_HEIGHT-180,
+				250, 60);
 		passwordField.setPasswordCharacter('*');
 		passwordField.setPasswordMode(true);
 
@@ -186,10 +184,10 @@ public class MelonCycle extends Game {
 
 		// !========================! Создаем поле боя !========================! \\
 
-		com.melons.game.gui.Panel panel2 = new com.melons.game.gui.Panel(0, 0, "GUI/Panels/Panel2.png");
+		Panel panel2 = new Panel(0, 0, "GUI/Panels/Panel2.png");
 		fight.addActor(panel2);
 
-		com.melons.game.gui.Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/Panels/melon_panel2.png");
+		Panel panel3 = new Panel(0, panel2.getHeight(), "GUI/Panels/melon_panel2.png");
 		fight.addActor(panel3);
 
 		fight_panels.add(panel2);
@@ -288,10 +286,10 @@ public class MelonCycle extends Game {
 		return player;
 	}
 
-	public ArrayList<RuneButton> getPlayerRunes(){
-		ArrayList<RuneButton> runes = new ArrayList<>();
+	public ArrayList<com.melons.game.gui.buttons.RuneButton> getPlayerRunes(){
+		ArrayList<com.melons.game.gui.buttons.RuneButton> runes = new ArrayList<>();
 		for (Skill i: player.getSkills()){
-			RuneButton r = new RuneButton(0, 0, this, i);
+			com.melons.game.gui.buttons.RuneButton r = new RuneButton(0, 0, this, i);
 			runes.add(r);
 		}
 		return runes;

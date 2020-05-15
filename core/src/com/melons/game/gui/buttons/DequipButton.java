@@ -1,12 +1,12 @@
-package com.melons.game.gui;
+package com.melons.game.gui.buttons;
 
-import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
+import com.melons.game.gui.containers.DescContainer;
 
 public class DequipButton extends GuiButton {
 
     protected String skillName;
-    protected DescContainer owner;
+    protected com.melons.game.gui.containers.DescContainer owner;
 
     public DequipButton(float x, float y, MelonCycle g, String skillName, DescContainer owner) {
         super(x, y, g, "Убрать", g.getLib());

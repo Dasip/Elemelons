@@ -1,4 +1,4 @@
-package com.melons.game.gui;
+package com.melons.game.gui.buttons;
 
 import com.melons.game.controllers.FightController;
 import com.melons.game.MelonCycle;

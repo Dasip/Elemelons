@@ -1,4 +1,4 @@
-package com.melons.game.gui;
+package com.melons.game.gui.buttons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,11 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
+import com.melons.game.gui.containers.RuneContainer;
 import com.melons.game.interfaces.SizeChangable;
 
 public class PageButton extends ImageButton implements SizeChangable {
 
-    protected RuneContainer pager;
+    protected com.melons.game.gui.containers.RuneContainer pager;
     protected int pageValue;
 
     protected float default_x;

@@ -1,9 +1,8 @@
-package com.melons.game.gui;
+package com.melons.game.gui.containers;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.melons.game.Constants;
-import com.melons.game.RuneButton;
-import com.melons.game.skills.Skill;
+import com.melons.game.gui.buttons.RuneButton;
 
 import java.util.ArrayList;
 
@@ -24,8 +23,7 @@ public class CurrentContainer extends Panel {
         int start_y = Constants.START_SCREEN_HEIGHT - 150;
         for (RuneButton i: runes){
             owner.addActor(i);
-            i.setX(25);
-            i.setY(start_y);
+            i.setCoords(25, start_y);
             start_y -= 120;
         }
     }

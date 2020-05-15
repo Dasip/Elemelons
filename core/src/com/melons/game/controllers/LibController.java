@@ -2,9 +2,9 @@ package com.melons.game.controllers;
 
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
-import com.melons.game.RuneButton;
-import com.melons.game.gui.CurrentContainer;
-import com.melons.game.gui.DescContainer;
+import com.melons.game.gui.buttons.RuneButton;
+import com.melons.game.gui.containers.CurrentContainer;
+import com.melons.game.gui.containers.DescContainer;
 import com.melons.game.skills.Skill;
 
 import java.util.ArrayList;

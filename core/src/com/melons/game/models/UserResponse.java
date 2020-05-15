@@ -3,7 +3,7 @@ package com.melons.game.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserResponse<UsData> {
+public class UserResponse<T> {
 
     @SerializedName("status")
     @Expose
@@ -13,7 +13,7 @@ public class UserResponse<UsData> {
     private String message;
     @SerializedName("data")
     @Expose
-    private UserData data;
+    private T data;
     @SerializedName("token")
     @Expose
     private String token;
@@ -34,11 +34,11 @@ public class UserResponse<UsData> {
         this.message = message;
     }
 
-    public UserData getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(UserData data) {
+    public void setData(T data) {
         this.data = data;
     }
 

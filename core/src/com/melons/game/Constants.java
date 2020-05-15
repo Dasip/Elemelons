@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.melons.game.interfaces.API;
+import com.melons.game.models.MelonData;
 import com.melons.game.models.Melongame;
 import com.melons.game.models.PostData;
 import com.melons.game.models.TokenData;
@@ -21,6 +22,7 @@ import com.melons.game.skills.Skill;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import jdk.nashorn.api.scripting.JSObject;
@@ -29,7 +31,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class Constants {
@@ -45,18 +46,20 @@ public class Constants {
 
     public static final String BASE_URL = "http://195.19.44.146:89/";
     public static final String API_KEY = "2295262834A821A2FD76A6B3C6495E02";
+    public static final String UserToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNjEifSwiaWF0IjoxNTg5NTM0NjQ1LCJleHAiOjE1ODk2MjEwNDV9.fOrxMjaw5_DPMrIBSPxklOCmj32zTz2voDqoaFCcVdI";
 
-    public static String TOKEN = "";
+    public static String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNTgifSwiaWF0IjoxNTg5NTM0ODQ3LCJleHAiOjE1ODk2MjEyNDd9.h12A-0MLGw7uVtP_QU2Nj315vtAjgsrZ1VyLaWb4Kyc";
 
     public static final String ADMIN_NAME = "dima@dima.com";
     public static final String ADMIN_PASS = "123456";
 
     public static boolean logged = false;
+    public static boolean started = false;
     public static String username = "";
-    public static String id = "";
-    public static String seedCurrency = "";
+    public static String id = "1";
+    public static String seedCurrency = "100";
     public static ArrayList<Skill> skillbuild = new ArrayList<>();
-    public static String skillshidden = new String();
+    public static String skillshidden = "";
     public static boolean skillsToChange = false;
 
     // !===================! Переменные механик игры !===================! \\
@@ -98,19 +101,18 @@ public class Constants {
     }
 
 
-
-
-
-
     public static Retrofit GET_RETROFIT(){
+        /*
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();*/
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit;
     }
-
-
 
 
     public static String GET_TOKEN(){
@@ -161,7 +163,7 @@ public class Constants {
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
-        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), Constants.username, "nickname");
+        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), TOKEN, Constants.username, "nickname");
 
         melonCall.enqueue(new Callback<UserResponse<UserData>>() {
             @Override
@@ -202,41 +204,38 @@ public class Constants {
         UPDATE_DB();
     }
 
-    public static void UPDATE_DB() {
+    public static void UPDATE_DB(){
 
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
-        HashMap<String, String> data = new HashMap<>();
-
-        data.put("_id", id);
-        data.put("nickname", username);
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("_id", "1");
+        data.put("nickname", "MrD");
         data.put("skillbuild", skillshidden);
-        data.put("skillbought",skillshidden);
-        data.put("seedcurrency", seedCurrency);
+        data.put("skillbought", skillshidden);
+        data.put("seedcurrency", "100");
 
-        System.out.println(data);
-
-        Call<PostData> updateResponse = api.update_melon(GET_API_KEY(), data);
-
-        updateResponse.enqueue(new Callback<PostData>() {
+        Call<UserResponse<PostData>> request = api.update_melon(API_KEY, TOKEN, data);
+        request.enqueue(new Callback<UserResponse<PostData>>() {
             @Override
-            public void onResponse(Call<PostData> call, Response<PostData> response) {
+            public void onResponse(Call<UserResponse<PostData>> call, Response<UserResponse<PostData>> response) {
                 if (response.code() == 200){
-                    System.out.println("VSE GOOD");
+                    System.out.println("GOOD");
                 }
                 else{
-                    System.out.println(response.raw());
+                    System.out.println("BAD");
                 }
             }
 
             @Override
-            public void onFailure(Call<PostData> call, Throwable t) {
-                System.out.println(123);
+            public void onFailure(Call<UserResponse<PostData>> call, Throwable t) {
                 System.out.println(t);
             }
         });
+
     }
+
 
 }
 
