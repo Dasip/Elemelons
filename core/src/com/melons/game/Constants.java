@@ -20,6 +20,7 @@ import com.melons.game.skills.FlameWave;
 import com.melons.game.skills.Lightning;
 import com.melons.game.skills.Skill;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -160,13 +161,34 @@ public class Constants {
     }
 
 
-    public static void LOG_IN(HashMap<String, String> data){
+    public static int LOG_IN(HashMap<String, String> data) {
 
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
         Call<UserResponse<UserData>> userCall = api.login(Constants.GET_API_KEY(), data);
 
+        int code = 0;
+        UserData user = null;
+
+        try {
+            Response<UserResponse<UserData>> response = userCall.execute();
+            code = response.code();
+            if (code == 200) {
+                user = response.body().getData();
+                System.out.println("LOGGED IN");
+                return Constants.MELON_IN(user);
+            }
+            else{
+                return code;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
+
+/*
         userCall.enqueue(new Callback<UserResponse<UserData>>() {
             @Override
             public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
@@ -191,11 +213,12 @@ public class Constants {
             }
         });
 
+    */
     }
 
 
 
-    public static void MELON_IN(UserData data){
+    public static int MELON_IN(UserData data){
         logged = true;
         username = data.getUsername();
 
@@ -232,7 +255,7 @@ public class Constants {
 
             }
         });
-
+    return 1;
     }
 
     public static void UP_TO_DATE_SKILLS(ArrayList<Skill> skills){

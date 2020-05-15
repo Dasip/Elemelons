@@ -2,6 +2,7 @@ package com.melons.game.gui.buttons;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.melons.game.Constants;
 import com.melons.game.MelonCycle;
@@ -26,12 +27,24 @@ public class EnterButton extends GuiButton {
     protected MelonTextField password;
     protected MelonTextField email;
 
-    public EnterButton self = this;
+    protected Label warning;
+    protected float def_warn_x;
+    protected float def_warn_y;
 
 
     public EnterButton(float x, float y, MelonCycle g, String text, String mode, Stage owner) {
         super(x, y, g, text, owner);
         this.mode = mode;
+
+        warning = new Label("", Constants.getSkin());
+        owner.addActor(warning);
+
+        def_warn_x = x - 100;
+        def_warn_y = y + getHeight() + 15;
+
+        warning.setX(def_label_x);
+        warning.setY(def_label_y);
+
     }
 
     public void setFields(MelonTextField l, MelonTextField p){
@@ -57,7 +70,10 @@ public class EnterButton extends GuiButton {
             user.put("username", login.getText());
             user.put("password", password.getText());
 
-            Constants.LOG_IN(user);
+            int code = Constants.LOG_IN(user);
+            if (code == 406){
+                warning.setText("Неправильный email или пароль");
+            }
 
         } else if (mode == "register") {
 
@@ -74,8 +90,16 @@ public class EnterButton extends GuiButton {
     }
 
     @Override
+    public void resize(int nw, int nh) {
+        super.resize(nw, nh);
+        warning.setX(def_warn_x);
+        warning.setY(def_warn_y);
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
         if (Constants.logged && !Constants.started){
             game.changeStage(toChange);
             Constants.started = true;
