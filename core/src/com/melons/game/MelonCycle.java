@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
 import com.melons.game.controllers.LibController;
@@ -159,7 +161,7 @@ public class MelonCycle extends Game {
 		Panel panel4 = new Panel(panel1.getWidth()+1, 0, "GUI/Panels/melon_panel.png");
 		lib.addActor(panel4);
 
-		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-250, 10, this, "Меню", lib);
+		GuiButton gui2 = new GuiButton(Constants.START_SCREEN_WIDTH-220, 10, this, "Меню", lib);
 		lib.addActor(gui2);
 		gui2.setStage(main);
 

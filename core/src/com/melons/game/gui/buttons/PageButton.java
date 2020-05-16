@@ -64,7 +64,7 @@ public class PageButton extends Actor implements SizeChangable {
         float by = default_y / Constants.START_SCREEN_HEIGHT * new_height;
         float width = default_width / Constants.START_SCREEN_WIDTH * new_width;
         float height = default_height / Constants.START_SCREEN_HEIGHT * new_height;
-        setBounds(bx, default_y, default_width, default_height);
+        setBounds(default_x, default_y, width, height);
     }
 
     @Override
