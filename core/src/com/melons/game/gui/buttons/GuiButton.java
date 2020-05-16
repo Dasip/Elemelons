@@ -97,7 +97,7 @@ public class GuiButton extends Actor implements SizeChangable {
         float by = default_y / Constants.START_SCREEN_HEIGHT * nh;
         float width = default_width / Constants.START_SCREEN_WIDTH * nw;
         float height = default_height / Constants.START_SCREEN_HEIGHT * nh;
-        setBounds(default_x, default_y, width, height);
+        setBounds(bx, by, default_width, default_height);
     }
 
     @Override

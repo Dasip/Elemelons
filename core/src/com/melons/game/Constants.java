@@ -50,7 +50,7 @@ public class Constants {
     public static final String API_KEY = "2295262834A821A2FD76A6B3C6495E02";
     public static final String UserToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNjEifSwiaWF0IjoxNTg5NTM0NjQ1LCJleHAiOjE1ODk2MjEwNDV9.fOrxMjaw5_DPMrIBSPxklOCmj32zTz2voDqoaFCcVdI";
 
-    public static String ADMIN_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImlkIjoiNTgifSwiaWF0IjoxNTg5NTQ3MjE3LCJleHAiOjE1ODk2MzM2MTd9.fs7F1Duy4r2VUH1NxJ2po7mDL_rG0A69_PNMbkk1okg";
+    public static String ADMIN_TOKEN = "";
     public static final String ADMIN_NAME = "dima@dima.com";
     public static final String ADMIN_PASS = "123456";
 
@@ -58,8 +58,6 @@ public class Constants {
     public static boolean started = false;
     public static MelonData currentUser = new MelonData();
     public static String username = "";
-    public static String id = "1";
-    public static String seedCurrency = "100";
     public static ArrayList<Skill> skillbuild = new ArrayList<>();
     public static String skillshidden = "";
     public static boolean skillsToChange = false;
@@ -81,6 +79,26 @@ public class Constants {
 
     public static ArrayList<Skill> GET_SKILLS(){
         ArrayList<Skill> skills = new ArrayList<>();
+        skills.add(new Fireball());
+        skills.add(new Lightning());
+        skills.add(new FlameWave());
+        skills.add(new ElectricField());
+
+        skills.add(new Fireball());
+        skills.add(new Lightning());
+        skills.add(new FlameWave());
+        skills.add(new ElectricField());
+
+        skills.add(new Fireball());
+        skills.add(new Lightning());
+        skills.add(new FlameWave());
+        skills.add(new ElectricField());
+
+        skills.add(new Fireball());
+        skills.add(new Lightning());
+        skills.add(new FlameWave());
+        skills.add(new ElectricField());
+
         skills.add(new Fireball());
         skills.add(new Lightning());
         skills.add(new FlameWave());
@@ -117,33 +135,33 @@ public class Constants {
     }
 
 
-    public static String GET_TOKEN(){
+
+    public static void GET_TOKEN(){
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
-        HashMap<String, String> data = new HashMap<>();
-        data.put("username", ADMIN_NAME);
-        data.put("password", ADMIN_PASS);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("username", ADMIN_NAME);
+        map.put("password", ADMIN_PASS);
 
-        Call<ServerTokenResponse<TokenData>> tokenResponse = api.request_token(Constants.API_KEY, data);
+        Call<ServerTokenResponse<TokenData>> tokenCall = api.request_token(API_KEY, map);
 
-        tokenResponse.enqueue(new Callback<ServerTokenResponse<TokenData>>() {
+        tokenCall.enqueue(new Callback<ServerTokenResponse<TokenData>>() {
             @Override
             public void onResponse(Call<ServerTokenResponse<TokenData>> call, Response<ServerTokenResponse<TokenData>> response) {
                 if (response.code() == 200){
-                    ServerTokenResponse<TokenData> tokenData = response.body();
-                    ADMIN_TOKEN = tokenData.getTokenData().getToken();
+                    ADMIN_TOKEN = response.body().getTokenData().getToken();
+                }
+                else{
+                    System.out.println("TOKEN NOT GOT");
                 }
             }
 
             @Override
             public void onFailure(Call<ServerTokenResponse<TokenData>> call, Throwable t) {
-                System.out.println("Chto-to slomalos");
-            }
-        }
-        );
 
-        return ADMIN_TOKEN;
+            }
+        });
     }
 
     public static String GET_API_KEY(){
@@ -178,43 +196,13 @@ public class Constants {
                 user = response.body().getData();
                 System.out.println("LOGGED IN");
                 return Constants.MELON_IN(user);
-            }
-            else{
+            } else {
                 return code;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return 0;
-
-
-/*
-        userCall.enqueue(new Callback<UserResponse<UserData>>() {
-            @Override
-            public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
-                if (response.code() == 200){
-                    UserResponse<UserData> userResponse = response.body();
-
-                    System.out.println("LOGGED IN");
-                    System.out.println(userResponse.getData().getUsername());
-
-                    Constants.MELON_IN(userResponse.getData());
-
-                }
-                else{
-                    System.out.println("NOT LOGGED IN");
-                    System.out.println(response.raw());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserResponse<UserData>> call, Throwable t) {
-                System.out.println("BROKEN WHILE LOGGIN IN");
-            }
-        });
-
-    */
-    }
+        return 0;}
 
 
 
@@ -225,7 +213,7 @@ public class Constants {
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
-        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), ADMIN_TOKEN, Constants.username, "nickname");
+        Call<UserResponse<UserData>> melonCall = api.get_melon(Constants.GET_API_KEY(), Constants.username, "nickname");
 
         melonCall.enqueue(new Callback<UserResponse<UserData>>() {
             @Override
@@ -285,7 +273,7 @@ public class Constants {
         data.put("skillbought", skillshidden);
         data.put("seedcurrency", currentUser.getSeedcurrency());
 
-        Call<UserResponse<PostData>> request = api.update_melon(API_KEY, ADMIN_TOKEN, data);
+        Call<UserResponse<PostData>> request = api.update_melon(API_KEY, data);
         request.enqueue(new Callback<UserResponse<PostData>>() {
             @Override
             public void onResponse(Call<UserResponse<PostData>> call, Response<UserResponse<PostData>> response) {
@@ -311,7 +299,7 @@ public class Constants {
         Retrofit retrofit = Constants.GET_RETROFIT();
         API api = retrofit.create(API.class);
 
-        Call<UserResponse<PostData>> registerResp = api.register_user(Constants.API_KEY, Constants.ADMIN_TOKEN, data);
+        Call<UserResponse<PostData>> registerResp = api.register_user(Constants.API_KEY, ADMIN_TOKEN, data);
         registerResp.enqueue(new Callback<UserResponse<PostData>>() {
             @Override
             public void onResponse(Call<UserResponse<PostData>> call, Response<UserResponse<PostData>> response) {
@@ -352,7 +340,7 @@ public class Constants {
 
 
 
-        Call<UserResponse<UserData>> melonResp = api.add_melon(API_KEY, ADMIN_TOKEN, data2);
+        Call<UserResponse<UserData>> melonResp = api.add_melon(API_KEY, data2);
         melonResp.enqueue(new Callback<UserResponse<UserData>>() {
             @Override
             public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {

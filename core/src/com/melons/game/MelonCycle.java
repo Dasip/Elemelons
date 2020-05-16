@@ -62,6 +62,8 @@ public class MelonCycle extends Game {
 	@Override
 	public void create () {
 
+		Constants.GET_TOKEN();
+
 		main = new Stage(viewport);
 		fight = new Stage(viewport);
 		lib = new Stage(viewport);
@@ -311,9 +313,12 @@ public class MelonCycle extends Game {
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		System.out.println(width + " " + height);
+		int counter = 0;
 		for (com.melons.game.interfaces.SizeChangable i: toResize){
 			i.resize(width, height);
+			counter++;
 		}
+
 	}
 
 	public com.melons.game.controllers.FightController createMars(){

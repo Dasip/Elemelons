@@ -24,8 +24,8 @@ public class RuneButton extends Actor implements SizeChangable {
 
     private float x;
     private float y;
-    private float default_x;
-    private float default_y;
+    protected float default_x;
+    protected float default_y;
 
     private float default_width;
     private float default_height;
@@ -78,14 +78,14 @@ public class RuneButton extends Actor implements SizeChangable {
 
     @Override
     public void resize(int new_width, int new_height) {
-        float bx = default_x / Constants.START_SCREEN_WIDTH * new_width;
-        float by = default_y / Constants.START_SCREEN_HEIGHT * new_height;
+        System.out.println("DeFAULTS " + this.default_x + " " + this.default_y);
+        float bx = this.default_x * (new_width / Constants.START_SCREEN_WIDTH);
+        float by = this.default_y * (new_height / Constants.START_SCREEN_HEIGHT);
         float width = default_width / Constants.START_SCREEN_WIDTH * new_width;
         float height = default_height / Constants.START_SCREEN_HEIGHT * new_height;
-        System.out.println("Melon " + bx + " " + by);
-        setX(default_x);
-        setY(default_y);
-        setBounds(bx, by, width, height);
+
+        setBounds(bx, by, default_width, default_height);
+
 
     }
 
@@ -94,8 +94,8 @@ public class RuneButton extends Actor implements SizeChangable {
         setY(y);
         this.x = x;
         this.y = y;
-        default_x = x;
-        default_y = y;
+        this.default_x = x;
+        this.default_y = y;
     }
 
     public void pick(){

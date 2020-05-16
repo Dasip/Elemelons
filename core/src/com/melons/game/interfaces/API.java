@@ -21,8 +21,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface API {
-    @Headers({"X-API-KEY: " + Constants.API_KEY,
-            "Content-Type: application/x-www-form-urlencoded"})
+    @Headers({"Content-Type: application/x-www-form-urlencoded"})
 
     @FormUrlEncoded
     @POST("api/user/request_token")
@@ -38,14 +37,12 @@ public interface API {
     @FormUrlEncoded
     @POST("api/melongame/add")
     Call<UserResponse<UserData>> add_melon(@Header("X-API-KEY") String api_key,
-                                           @Header("X-TOKEN") String token,
                                            @FieldMap HashMap<String, String> map);
 
 
     @FormUrlEncoded
     @POST("api/melongame/update")
     Call<UserResponse<PostData>> update_melon(@Header("X-API-KEY") String api_key,
-                                              @Header("X-TOKEN") String token,
                                               @FieldMap HashMap<String, String> map);
 
 
@@ -58,7 +55,6 @@ public interface API {
 
     @GET("api/melongame/all")
     Call<UserResponse<UserData>> get_melon(@Header("X-API-KEY") String api_key,
-                                           @Header("X-TOKEN") String token,
                                            @Query("filter") String nick, @Query("field") String nickname);
 
 
