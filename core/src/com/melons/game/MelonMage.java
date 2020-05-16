@@ -52,7 +52,7 @@ public class MelonMage extends Actor implements SizeChangable {
     com.melons.game.controllers.FightController Mars;
 
     private int seedCurrency = 0;
-    int hp = 100;
+    private int hp = 100;
     int max_hp = 100;
     HealthBar hpBar;
 
@@ -387,5 +387,9 @@ public class MelonMage extends Actor implements SizeChangable {
         for (Skill s: skills){
             s.setController(M);
         }
+    }
+
+    public int getHP(){
+        return hp;
     }
 }
