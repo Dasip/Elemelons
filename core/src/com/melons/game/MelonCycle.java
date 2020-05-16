@@ -252,6 +252,7 @@ public class MelonCycle extends Game {
 		currentStage.addActor(player);
 		currentStage.addActor(player.hpBar);
 		player.setCoords(150, 200);
+		player.refreshAll();
 
 		enemy = generateEnemy();
 		currentStage.addActor(enemy);

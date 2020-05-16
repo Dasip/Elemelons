@@ -118,12 +118,13 @@ public class FightController {
     }
 
     public void defeated(MelonMage m){
+        /*
         for (MelonMage i: rivals){
             if (i != m){
                 i.refreshAll();
             }
         }
-
+*/
         pickable = false;
         System.out.println("Defeated!");
 
