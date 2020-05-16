@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.melons.game.controllers.FightController;
 import com.melons.game.controllers.LibController;
+import com.melons.game.controllers.SimpleAI;
 import com.melons.game.gui.MelonTextField;
 import com.melons.game.gui.buttons.RuneButton;
 import com.melons.game.gui.containers.CurrentContainer;
@@ -95,9 +96,12 @@ public class MelonCycle extends Game {
         login.addActor(butt333);
         butt333.setStage(register);
 
+        /*     Кнопка для перехода в игру БЕЗ авторизации
+        					Заглушена
 		butt333 = new GuiButton(Constants.START_SCREEN_WIDTH/4+100, Constants.START_SCREEN_HEIGHT/40, this, "В игру", login);
 		login.addActor(butt333);
 		butt333.setStage(main);
+		*/
 
         // !========================! Создаем меню регистрации !========================! \\
 
@@ -133,16 +137,6 @@ public class MelonCycle extends Game {
 		// !========================! Создаем главное меню !========================! \\
         Panel panel1 = new Panel(0, 0, "GUI/Panels/lib_panel.png");
         main.addActor(panel1);
-
-        /*
-		Panel panel = new Panel(0, 0, "GUI/main_panel.png");
-		main.addActor(panel);
-
-		Panel currentRunes = new Panel(panel.getWidth(), 0, "GUI/Panel.png");
-		main.addActor(currentRunes);
-
-		Panel custom = new Panel(panel.getWidth(), currentRunes.getHeight(), "GUI/melon_panel.png");
-		main.addActor(custom);*/
 
 		GuiButton gui1 = new GuiButton(100, 400, this, "В бой", main);
 		main.addActor(gui1);
@@ -209,7 +203,7 @@ public class MelonCycle extends Game {
 		Gdx.input.setInputProcessor(currentStage);
 
         // !========================! Учим персонажа навыкам !========================! \\
-
+		player.setUser(true);
         //player.addSkill(new Fireball(this));
         //player.addSkill(new Lightning(this));
         //player.addSkill(new FlameWave(this));
@@ -337,6 +331,16 @@ public class MelonCycle extends Game {
 		HealthBar hp = new HealthBar(300, 300);
 		fight.addActor(hp);
 		MelonMage enemy = new MelonMage(100, 100, hp, this);
+
+		ArrayList<Skill> skills = Constants.GET_SKILLS();
+		while (enemy.getSkills().size() < Constants.MAX_SKILLS){
+			int random_index = (int) (Math.random() * skills.size());
+			enemy.addSkill(skills.get(random_index));
+			System.out.println("============");
+			System.out.println(random_index);
+		}
+		System.out.println(enemy.getSkills());
+		enemy.setGuide(new SimpleAI());
 		return enemy;
 	}
 

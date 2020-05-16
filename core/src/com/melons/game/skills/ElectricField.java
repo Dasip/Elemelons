@@ -24,12 +24,13 @@ public class ElectricField extends Skill {
     }
 
     @Override
-    public void pick() {
+    public boolean pick() {
         if (owner.getSeeds() >= seedToUse){
             owner.decreaseSeeds(seedToUse);
             use();
+            return true;
         }
-
+        return false;
     }
 
     @Override

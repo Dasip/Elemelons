@@ -30,8 +30,8 @@ public class HealthBar extends Actor {
     public void updateHealthBar(int val){
         if (val >= min_value && val <= max_value) {
             current_value = val;
-            System.out.println("HealthBar - " + val);
-            System.out.println();
+          //  System.out.println("HealthBar - " + val);
+            //System.out.println();
         }
     }
 

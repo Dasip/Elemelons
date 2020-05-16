@@ -8,7 +8,7 @@ public interface SkillButton {
     public void setCoords(float x, float y);
     public void setController(FightController m);
     public void useOnTarget(MelonMage target);
-    public void pick();
+    public boolean pick();
     public void setTarget(MelonMage speller, MelonMage target);
     public int getSeeds();
     public void setOwner(MelonMage a);

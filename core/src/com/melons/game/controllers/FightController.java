@@ -16,6 +16,9 @@ public class FightController {
 
     private boolean mustChange = false;
     private boolean pickable = true;
+    private boolean mustContinue = false;
+
+    private SimpleAI ai;
 
     ArrayList<MelonMage> rivals;
     MelonMage player;
@@ -28,6 +31,9 @@ public class FightController {
     Stage field;
 
     public FightController(ArrayList<MelonMage> melons, MelonMage player, MelonCycle gam, Stage g){
+        for (MelonMage m: melons){
+            m.setMars(this);
+        }
         rivals = melons;
         this.player = player;
         player.setSeedDraw(true);
@@ -45,7 +51,9 @@ public class FightController {
         current_melon.refreshSeeds();
         current_melon.runOverBuffs();
         mustChange = false;
-        if (current_melon != player){changeTurn();}
+        if (current_melon.getGuide() != null){
+            current_melon.getGuide().takeCommand(this, player);
+        }
     }
 
     public void pick(Skill skill){
@@ -53,13 +61,14 @@ public class FightController {
             unpick();
         }
         else if (pickable) {
-            for (MelonMage i: rivals){
-                if (i != player){
-                    i.setMark();
-                }
-                else{
-                    i.setShade();
-                    i.showSeedsToUse(skill.getSeeds());
+            if (current_melon.getGuide() == null) {
+                for (MelonMage i : rivals) {
+                    if (i != player) {
+                        i.setMark();
+                    } else {
+                        i.setShade();
+                        i.showSeedsToUse(skill.getSeeds());
+                    }
                 }
             }
             picked_skill = skill;
@@ -77,7 +86,7 @@ public class FightController {
     }
 
     public void pickMelon(MelonMage m){
-        if (picked_skill != null && m != player && pickable) {
+        if (picked_skill != null && m != current_melon && pickable) {
             picked_skill.setTarget(current_melon, m);
             current_melon.decreaseSeeds(picked_skill.getSeeds());
             unpick();
@@ -93,6 +102,10 @@ public class FightController {
         pickable = v;
         if (pickable && mustChange){
             changeTurn();
+        }
+        if (pickable && mustContinue){
+            mustContinue = false;
+            ai.takeCommand(this, player);
         }
     }
 
@@ -123,6 +136,11 @@ public class FightController {
 
         field.addActor(ok);
         ok.setStage(game.getMain());
+    }
+
+    public void setAIContinue(SimpleAI ai){
+        this.ai = ai;
+        mustContinue = true;
     }
 
 }

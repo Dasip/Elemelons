@@ -122,17 +122,18 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
             float by = default_y / start_screen_height * new_height;
             float width = default_width / start_screen_width * new_width;
             float height = default_height / start_screen_height * new_height;
-            System.out.println(width + " " + height);
             setBounds(bx, by, width, height);
         }
     }
 
     @Override
-    public void pick() {
+    public boolean pick() {
         if (owner.getSeeds() >= seedToUse) {
             Mars.pick(this);
             System.out.println(this.name);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -150,6 +151,9 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
         Mars.setPickable(false);
         this.speller = speller;
         this.target = target;
+        /*
+        System.out.println("SPELLER " + speller.getX() + " " + speller.getY());
+        System.out.println("TARGET " + target.getX() + " " + target.getY());*/
     }
 
     @Override

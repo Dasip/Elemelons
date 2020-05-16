@@ -82,7 +82,7 @@ public class Effect extends Actor implements SpellEffect, SizeChangable {
 
     @Override
     public boolean checkAchieved() {
-        if (target_x - x < scaled_width){
+        if (Math.abs(target_x - x) < scaled_width){
             return true;
         }
         return false;

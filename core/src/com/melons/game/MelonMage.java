@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.melons.game.buffs.ImmuneBuff;
 import com.melons.game.controllers.FightController;
+import com.melons.game.controllers.SimpleAI;
 import com.melons.game.gui.HealthBar;
 import com.melons.game.gui.Mark;
 import com.melons.game.interfaces.SizeChangable;
@@ -31,6 +32,9 @@ public class MelonMage extends Actor implements SizeChangable {
     private int seeds_in_use = 0;
     private ArrayList<Texture> seedPanel = new ArrayList<Texture>();
     private boolean drawSeeds = false;
+
+    private boolean isUser = false;
+    private SimpleAI guide = null;
 
     private float default_x;
     private float default_y;
@@ -96,10 +100,9 @@ public class MelonMage extends Actor implements SizeChangable {
     public Texture getImage(){ return Image; }
 
     public boolean preloadSkill(Skill s){
-        System.out.println("Preloading");
-        if (skills.size() < Constants.MAX_SKILLS) {
-            System.out.println(s.getTextureName());
+        if (skills.size() < Constants.MAX_SKILLS && !isSkillLearnt(s.getTextureName())) {
             skills.add(s);
+            s.setOwner(this);
             return true;
         }
         return false;
@@ -107,7 +110,7 @@ public class MelonMage extends Actor implements SizeChangable {
 
     public boolean addSkill(Skill s){
         boolean reaction = preloadSkill(s);
-        if (reaction){
+        if (reaction && isUser){
             Constants.UP_TO_DATE_SKILLS(getSkills());
         }
         return reaction;
@@ -202,7 +205,7 @@ public class MelonMage extends Actor implements SizeChangable {
             float by = default_y / Constants.START_SCREEN_HEIGHT * new_height;
             float width = default_width / Constants.START_SCREEN_WIDTH * new_width;
             float height = default_height / Constants.START_SCREEN_HEIGHT * new_height;
-            System.out.println("Melon " + width + " " + height);
+           // System.out.println("Melon " + width + " " + height);
             setBounds(bx, by, width, height);
         }
     }
@@ -282,7 +285,7 @@ public class MelonMage extends Actor implements SizeChangable {
         }
 
         seeds_in_use = s;
-        System.out.println("Max val " + max_val);
+       // System.out.println("Max val " + max_val);
         if (max_val - distance >= 0) {
             for (int i = max_val - 1; i >= max_val - distance; i--) {
                 seedPanel.set(i, new Texture(path));
@@ -296,7 +299,7 @@ public class MelonMage extends Actor implements SizeChangable {
         for (int i=max_seeds-1; i>seeds-1; i--){
             seedPanel.set(i, new Texture("GUI/Seeds/seedEmpty.png"));
         }
-        System.out.println("Decreased " + seeds);
+       // System.out.println("Decreased " + seeds);
         if (seeds == 0){
             Mars.setMustChange(true);
         }
@@ -362,4 +365,26 @@ public class MelonMage extends Actor implements SizeChangable {
         allBought.add(s);
     }
 
+    public boolean isUser() {
+        return isUser;
+    }
+
+    public void setUser(boolean user) {
+        isUser = user;
+    }
+
+    public SimpleAI getGuide() {
+        return guide;
+    }
+
+    public void setGuide(SimpleAI guide) {
+        this.guide = guide;
+        guide.setOwner(this);
+    }
+
+    public void setMars(FightController M){
+        for (Skill s: skills){
+            s.setController(M);
+        }
+    }
 }
