@@ -132,6 +132,7 @@ public class Constants {
             public void onResponse(Call<ServerTokenResponse<TokenData>> call, Response<ServerTokenResponse<TokenData>> response) {
                 if (response.code() == 200){
                     ADMIN_TOKEN = response.body().getTokenData().getToken();
+                    System.out.println("TOKEN " + ADMIN_TOKEN);
                 }
                 else{
                     System.out.println("TOKEN NOT GOT");
@@ -160,31 +161,32 @@ public class Constants {
     }
 
 
-    public static int LOG_IN(HashMap<String, String> data) {
+    public static void LOG_IN(HashMap<String, String> data, final EnterButton b) {
 
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
 
         Call<UserResponse<UserData>> userCall = api.login(Constants.GET_API_KEY(), data);
 
-        int code = 0;
-        UserData user = null;
-
-        try {
-            Response<UserResponse<UserData>> response = userCall.execute();
-            code = response.code();
-            if (code == 200) {
-                user = response.body().getData();
-                System.out.println("LOGGED IN");
-                return Constants.MELON_IN(user);
-            } else {
-                return code;
+        userCall.enqueue(new Callback<UserResponse<UserData>>() {
+            @Override
+            public void onResponse(Call<UserResponse<UserData>> call, Response<UserResponse<UserData>> response) {
+                if (response.code() == 200) {
+                    System.out.println("LOGGED IN");
+                    Constants.MELON_IN(response.body().getData());
+                } else {
+                    if (b != null) {
+                        b.setMessage("Неправильный логин или пароль");
+                    }
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return 0;}
 
+            @Override
+            public void onFailure(Call<UserResponse<UserData>> call, Throwable throwable) {
+
+            }
+        });
+    }
 
 
     public static int MELON_IN(UserData data){
@@ -331,7 +333,7 @@ public class Constants {
                     dataLog.put("password", data0.get("password"));
 
                     System.out.println("CREATED MELON");
-                    LOG_IN(dataLog);
+                    LOG_IN(dataLog, null);
                 }
                 else{
                     System.out.println("NOT CREATED MELON");

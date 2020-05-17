@@ -25,7 +25,6 @@ public class CurrentContainer extends MelonContainer {
         for (int i=0; i<r.size(); i++){
             owner.addActor(r.get(i));
             r.get(i).setCoords(25, start_y + y_step * i);
-            System.out.println(r.get(i).getDefY());
         }
     }
 
