@@ -12,7 +12,7 @@ public class SimpleAI {
     public void takeCommand(FightController M, MelonMage P){
         Mars = M;
         player = P;
-        if (owner.getHP() > 0){
+        if (owner.getHP() > 0 && P.getHP() > 0){
         for (Skill s: owner.getSkills()) {
             if (s.getTextureName() == "Fireball" || s.getTextureName() == "Lightning") {
                 boolean canFight = s.pick();

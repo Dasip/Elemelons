@@ -119,11 +119,13 @@ public class FightController {
 
     public void defeated(MelonMage m){
 
+        /*
         for (MelonMage i: rivals){
             if (i != m){
                 i.refreshAll();
             }
-        }
+        }*/
+
 
         pickable = false;
         System.out.println("Defeated!");
@@ -133,7 +135,12 @@ public class FightController {
 
         field.addActor(message_window);
 
-        GuiButton ok = new GuiButton(Constants.START_SCREEN_WIDTH / 2 - win.getWidth() / 3, Constants.START_SCREEN_HEIGHT / 2 - win.getHeight() / 3, game, "Ок", field);
+        String val = "Победа!\nПродолжить";
+        if (m == player){
+            val = "Поражение\nПродолжить";
+        }
+
+        GuiButton ok = new GuiButton(Constants.START_SCREEN_WIDTH / 2 - win.getWidth() / 3, Constants.START_SCREEN_HEIGHT / 2 - win.getHeight() / 3, game, val, field);
 
         field.addActor(ok);
         ok.setStage(game.getMain());
