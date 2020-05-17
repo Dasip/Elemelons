@@ -268,7 +268,6 @@ public class Constants {
 
             @Override
             public void onFailure(Call<UserResponse<PostData>> call, Throwable t) {
-                System.out.println();
                 System.out.println(t);
             }
         });
@@ -309,6 +308,7 @@ public class Constants {
     }
 
 
+    // Фукнция создания строчки нового пользователя в базе игроков
     public static void CREATE_MELON(final HashMap<String, String> data0){
         Retrofit retrofit = GET_RETROFIT();
         API api = retrofit.create(API.class);
@@ -318,7 +318,6 @@ public class Constants {
         data2.put("skillbuild", "Fireball");
         data2.put("skillbought", "Fireball");
         data2.put("seedcurrency", "100");
-
 
 
         Call<UserResponse<UserData>> melonResp = api.add_melon(API_KEY, data2);

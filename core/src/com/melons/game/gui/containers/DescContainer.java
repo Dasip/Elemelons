@@ -34,7 +34,7 @@ public class DescContainer extends MelonContainer {
 
     public void setRune(RuneButton r){
         rune = r.copy();
-        if (rune != null) {
+        if (rune != null && rune.getRuneName() != "Empty") {
             if (!game.getPlayer().isSkillLearnt(rune.getRuneName())) {
                 showSet();
             }
@@ -42,6 +42,9 @@ public class DescContainer extends MelonContainer {
                 showUnset();
             }
 
+        }
+        else{
+            cleanButtons();
         }
     }
 
