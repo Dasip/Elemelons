@@ -66,11 +66,11 @@ public class MelonCycle extends Game {
 
 		Constants.GET_TOKEN();
 
-		main = new Stage(viewport);
-		fight = new Stage(viewport);
-		lib = new Stage(viewport);
-		login = new Stage(viewport);
-		register = new Stage(viewport);
+		main = new Stage(viewport); //  Сцена главного меню
+		fight = new Stage(viewport);  // Сцена боя
+		lib = new Stage(viewport);  // Сцена лавки знаний
+		login = new Stage(viewport);  // Сцена окна авторизации
+		register = new Stage(viewport);   // Сцена окна регистрации
 
 		Minerva = new LibController(this);
 

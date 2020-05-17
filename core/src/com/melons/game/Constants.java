@@ -84,25 +84,6 @@ public class Constants {
         skills.add(new FlameWave());
         skills.add(new ElectricField());
 
-        skills.add(new Fireball());
-        skills.add(new Lightning());
-        skills.add(new FlameWave());
-        skills.add(new ElectricField());
-
-        skills.add(new Fireball());
-        skills.add(new Lightning());
-        skills.add(new FlameWave());
-        skills.add(new ElectricField());
-
-        skills.add(new Fireball());
-        skills.add(new Lightning());
-        skills.add(new FlameWave());
-        skills.add(new ElectricField());
-
-        skills.add(new Fireball());
-        skills.add(new Lightning());
-        skills.add(new FlameWave());
-        skills.add(new ElectricField());
         return skills;
     }
 
