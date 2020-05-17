@@ -84,7 +84,7 @@ public class MelonCycle extends Game {
 		loginField.setMelonSize(Constants.START_SCREEN_WIDTH/4-100, Constants.START_SCREEN_HEIGHT-180,
 				250, 60);
 
-		passwordField = new MelonTextField("", Constants.getSkin(), "Password", login, this);
+		passwordField = new MelonTextField("", Constants.getSkin(), "Пароль", login, this);
 		login.addActor(passwordField);
 		passwordField.setMelonSize(Constants.START_SCREEN_WIDTH/2+50, Constants.START_SCREEN_HEIGHT-180,
 				250, 60);
@@ -112,12 +112,12 @@ public class MelonCycle extends Game {
         panellog = new Panel(0, 0, "GUI/Panels/lib_panel.png");
         register.addActor(panellog);
 
-        newLoginField = new MelonTextField("", Constants.getSkin(),"Nickname", register, this);
+        newLoginField = new MelonTextField("", Constants.getSkin(),"Ник", register, this);
         register.addActor(newLoginField);
         newLoginField.setMelonSize(Constants.START_SCREEN_WIDTH/4-100, Constants.START_SCREEN_HEIGHT-300,
 				250, 60);
 
-        newPasswordField = new MelonTextField("", Constants.getSkin(),"Password", register, this);
+        newPasswordField = new MelonTextField("", Constants.getSkin(),"Пароль", register, this);
         register.addActor(newPasswordField);
         newPasswordField.setMelonSize(Constants.START_SCREEN_WIDTH/2+50, Constants.START_SCREEN_HEIGHT-180,
 				250, 60);

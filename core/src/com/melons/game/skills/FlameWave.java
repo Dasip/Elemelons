@@ -26,7 +26,7 @@ public class FlameWave extends Skill {
         this.damage = 5;
         this.seedToUse = 2;
         this.img = new Texture("Runes/FlameWave.png");
-        this.description = "Flamewave hits \nan enemy with \nfire every \nturn for 2 \nturns";
+        this.description = "Огненная волна \nнаносит 5 единиц \nурона огнем и \nнаносит еще 10 \nурона за 2 хода.";
     }
 
     @Override

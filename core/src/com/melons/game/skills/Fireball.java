@@ -24,7 +24,7 @@ public class Fireball extends Skill {
         this.name = "Fireball";
         this.damage = 5;
         seedToUse = 1;
-        this.description = "Fireball - damages \nenemies with \nfire. \nClassic";
+        this.description = "Огненный шар - \nнаносит 5 единиц \nурона огнем. \nКлассика.";
     }
 
     @Override

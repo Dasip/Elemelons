@@ -24,7 +24,7 @@ public class Lightning extends Skill {
         this.name = "Lightning";
         this.damage = 15;
         seedToUse = 2;
-        this.description = "Bolt Lightning - \nhits the enemy \nwith elecrical \nshock strike";
+        this.description = "Молния - наносит\n15 единиц урона \nэлектричеством.";
     }
 
     @Override

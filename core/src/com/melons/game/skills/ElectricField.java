@@ -20,7 +20,7 @@ public class ElectricField extends Skill {
         this.damage = 0;
         this.seedToUse = 3;
         this.img = new Texture("Runes/ElectricField.png");
-        this.description = "Electric field. \nProtects from \nlightnings";
+        this.description = "Электрополе. \nДает иммунитет \nк 2 электрическим \nзаклинаниям \nна 2 хода.";
     }
 
     @Override
