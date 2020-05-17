@@ -61,7 +61,7 @@ public class RuneContainer extends MelonContainer {
     }
 
     public void showRunes(int page){
-        System.out.println(page);
+       // System.out.println(page);
         if (page > 0 && !(runeVolume*(page-1) >= runes.size())) {
             clearRunes();
 
@@ -78,6 +78,7 @@ public class RuneContainer extends MelonContainer {
                 RuneButton cur = runes.get(i);
                 owner.addActor(cur);
                 cur.setCoords(x + (col * xStep) + xSep, height - (row * yStep) - ySep);
+                System.out.println("Coords " + (x + (col * xStep) + xSep) + " " + (height - (row * yStep) - ySep));
             }
 
             runeIndex = curIndex;

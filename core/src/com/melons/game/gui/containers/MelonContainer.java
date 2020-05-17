@@ -41,8 +41,5 @@ public class MelonContainer extends Panel implements SizeChangable {
         float height = default_height / Constants.START_SCREEN_HEIGHT * new_height;
         setX(default_x);
         setY(default_y);
-        System.out.println(getX());
-        System.out.println(getY());
-        System.out.println("=====");
     }
 }

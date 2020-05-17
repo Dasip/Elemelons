@@ -78,29 +78,32 @@ public class RuneButton extends Actor implements SizeChangable {
 
     @Override
     public void resize(int new_width, int new_height) {
-        System.out.println("DeFAULTS " + this.default_x + " " + this.default_y);
+        //System.out.println("DeFAULTS " + this.default_x + " " + this.default_y);
         float bx = this.default_x * (new_width / Constants.START_SCREEN_WIDTH);
         float by = this.default_y * (new_height / Constants.START_SCREEN_HEIGHT);
         float width = default_width / Constants.START_SCREEN_WIDTH * new_width;
         float height = default_height / Constants.START_SCREEN_HEIGHT * new_height;
 
-        setBounds(bx, by, default_width, default_height);
+        setBounds(default_x, default_y, default_width, default_height);
 
 
     }
 
     public void setCoords(float x, float y){
-        setX(x);
-        setY(y);
         this.x = x;
         this.y = y;
         this.default_x = x;
         this.default_y = y;
+        setBounds(default_x, default_y, default_width, default_height);
     }
 
     public void pick(){
         LibController Minerva = game.getMinerva();
         Minerva.setRune(this);
+    }
+
+    public float getDefY(){
+        return default_y;
     }
 
     public RuneButton copy(){
