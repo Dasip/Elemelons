@@ -61,6 +61,10 @@ public class EnterButton extends GuiButton {
         mode = m;
     }
 
+    public void setMessage(String text){
+        warning.setText("Неправильный email или пароль");
+    }
+
     @Override
     public void execute() {
         if (this.mode == "login") {
@@ -70,10 +74,7 @@ public class EnterButton extends GuiButton {
             user.put("username", login.getText());
             user.put("password", password.getText());
 
-            int code = Constants.LOG_IN(user);
-            if (code == 406){
-                warning.setText("Неправильный email или пароль");
-            }
+            Constants.LOG_IN(user, this);
 
         } else if (mode == "register") {
 

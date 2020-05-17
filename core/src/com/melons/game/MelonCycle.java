@@ -178,7 +178,7 @@ public class MelonCycle extends Game {
 		desc = new DescContainer(675, 0, 525, Constants.START_SCREEN_HEIGHT, lib, this);
 		lib.addActor(desc);
 
-		curr = new CurrentContainer(0, 0, 150, Constants.START_SCREEN_HEIGHT, lib);
+		curr = new CurrentContainer(0, 0, 150, Constants.START_SCREEN_HEIGHT, lib, this);
 		lib.addActor(curr);
 
 		Minerva.addDesc(desc);
@@ -291,10 +291,10 @@ public class MelonCycle extends Game {
 		return player;
 	}
 
-	public ArrayList<com.melons.game.gui.buttons.RuneButton> getPlayerRunes(){
-		ArrayList<com.melons.game.gui.buttons.RuneButton> runes = new ArrayList<>();
+	public ArrayList<RuneButton> getPlayerRunes(){
+		ArrayList<RuneButton> runes = new ArrayList<>();
 		for (Skill i: player.getSkills()){
-			com.melons.game.gui.buttons.RuneButton r = new RuneButton(0, 0, this, i);
+			RuneButton r = new RuneButton(0, 0, this, i);
 			runes.add(r);
 		}
 		return runes;
