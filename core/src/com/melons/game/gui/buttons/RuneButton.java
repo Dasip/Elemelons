@@ -86,7 +86,7 @@ public class RuneButton extends Actor implements SizeChangable {
         float width = default_width / Constants.START_SCREEN_WIDTH * new_width;
         float height = default_height / Constants.START_SCREEN_HEIGHT * new_height;
 
-        setBounds(bx, by, default_width, default_height);
+        setBounds(default_x, default_y, default_width, default_height);
 
 
     }
@@ -98,6 +98,7 @@ public class RuneButton extends Actor implements SizeChangable {
         this.y = y;
         this.default_x = x;
         this.default_y = y;
+        setBounds(default_x, default_y, default_width, default_height);
     }
 
     public void pick(){
