@@ -5,10 +5,14 @@
   "com.badlogic.gdx.graphics.g2d.BitmapFont":{
     "default-font": {
       "file":"Fonts/MelonFont32/melon32.fnt"
+    },
+    "picked-font": {
+      "file": "Fonts/PickedFont40/picked40.fnt"
     }
 },
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-    "default": { "font": "default-font" }
+    "default": { "font": "default-font" },
+    "picked": {"font": "picked-font"}
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "default": { "down": "default-round-down", "up": "default-round", "font": "default-font", "fontColor": "black" },

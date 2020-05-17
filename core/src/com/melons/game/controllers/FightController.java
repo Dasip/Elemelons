@@ -81,6 +81,7 @@ public class FightController {
             i.unsetMark();
             i.unsetShade();
         }
+        picked_skill.unpick();
         current_melon.showSeedsToUse(0);
         picked_skill = null;
     }

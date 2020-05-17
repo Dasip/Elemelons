@@ -18,6 +18,8 @@ public class RuneButton extends Actor implements SizeChangable {
     private String desc;  // Описание скилла
     private MelonCycle game;
 
+    private boolean picked = false;
+
     private Skill s;
 
     private String runeName;
@@ -99,8 +101,13 @@ public class RuneButton extends Actor implements SizeChangable {
     }
 
     public void pick(){
+        picked = true;
         LibController Minerva = game.getMinerva();
         Minerva.setRune(this);
+    }
+
+    public void unpick(){
+        picked = false;
     }
 
     public RuneButton copy(){
@@ -109,6 +116,14 @@ public class RuneButton extends Actor implements SizeChangable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        if (picked){
+            batch.setColor(0.6f, 0.6f, 0.6f, 1);
+        }
+
         batch.draw(Image, default_x, default_y);
+
+        if (picked){
+            batch.setColor(1, 1, 1, 1);
+        }
     }
 }

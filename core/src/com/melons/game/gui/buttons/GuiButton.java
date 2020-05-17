@@ -1,5 +1,6 @@
 package com.melons.game.gui.buttons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,6 +17,9 @@ public class GuiButton extends Actor implements SizeChangable {
 
     protected Texture Image;
     protected Label label;
+    protected float timer = 0;
+
+    protected boolean picked = false;
 
     protected float def_label_x;
     protected float def_label_y;
@@ -60,7 +64,7 @@ public class GuiButton extends Actor implements SizeChangable {
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                execute();
+                setPicked();
                 return true;
                 }
         });
@@ -87,6 +91,12 @@ public class GuiButton extends Actor implements SizeChangable {
         game.changeStage(toChange);
     }
 
+    public void setPicked(){
+        label.setStyle(Constants.getSkin().get("picked", Label.LabelStyle.class));
+        picked = true;
+        timer = 0;
+    }
+
 
     @Override
     public void resize(int nw, int nh) {
@@ -102,6 +112,16 @@ public class GuiButton extends Actor implements SizeChangable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        if (picked){
+            timer += Gdx.graphics.getDeltaTime();
+            if (timer > Gdx.graphics.getDeltaTime() * 7) {
+                label.setStyle(Constants.getSkin().get("default", Label.LabelStyle.class));
+                picked = false;
+                timer = 0;
+                execute();
+            }
+
+        }
         super.draw(batch, parentAlpha);
     }
 

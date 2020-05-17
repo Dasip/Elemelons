@@ -15,6 +15,8 @@ public class LibController {
     private CurrentContainer curr;
     private MelonCycle game;
 
+    private RuneButton pickedRune;
+
     public LibController(MelonCycle g){
         game = g;
     }
@@ -26,7 +28,11 @@ public class LibController {
     public void addCurr(CurrentContainer c) { curr = c; }
 
     public void setRune(RuneButton r){
+        if (pickedRune != null){
+            pickedRune.unpick();
+        }
         desc.setRune(r);
+        pickedRune = r;
     }
 
     public void updateCurrent(){

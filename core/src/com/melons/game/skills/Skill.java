@@ -16,6 +16,7 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     Texture img = new Texture("Runes/Empty.png");
 
+    protected boolean picked = false;
     protected MelonMage owner;
     MelonMage speller;
     MelonMage target;
@@ -129,6 +130,7 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     @Override
     public boolean pick() {
         if (owner.getSeeds() >= seedToUse) {
+            picked = true;
             Mars.pick(this);
             System.out.println(this.name);
             return true;
@@ -139,6 +141,7 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
     @Override
     public void use() {
         Mars.setPickable(true);
+        unpick();
     }
 
     @Override
@@ -171,13 +174,20 @@ public class Skill extends Actor implements SizeChangable, SkillButton {
 
     }
 
+    public void unpick(){
+        picked = false;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (owner.getSeeds() < seedToUse){
-            batch.setColor(0.5f, 0.5f, 0.5f, 0.7f);
+            batch.setColor(0.2f, 0.2f, 0.2f, 0.2f);
+        }
+        if (picked){
+            batch.setColor(0.5f, 0.5f, 0.5f, 1);
         }
         batch.draw(img, this.x, this.y);
-        if (owner.getSeeds() < seedToUse){
+        if (owner.getSeeds() < seedToUse || picked){
             batch.setColor(1, 1, 1, 1);
         }
     }
